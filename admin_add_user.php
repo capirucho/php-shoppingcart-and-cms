@@ -26,15 +26,15 @@
 
 	if ( check_input( $_POST ) ) {
 
-		$userName = $_POST['username'];
-		$firstName = $_POST['first_name'];
-		$lastName = $_POST['last_name'];
-		$password = $_POST['password'];
+		$userName = $db->real_escape_string( $_POST['username'] );
+		$firstName = $db->real_escape_string( $_POST['first_name'] );
+		$lastName = $db->real_escape_string( $_POST['last_name'] );
+		$password = $db->real_escape_string( $_POST['password'] );
 		$email = $_POST['email_address'];
 
 		# check if username exist insert
 		$foundUserName = 0;
-		$theSQL = "SELECT username FROM ".$table_name." WHERE username = '" . mysql_real_escape_string($userName) . "' LIMIT 1";
+		$theSQL = "SELECT username FROM ".$table_name." WHERE username = '" . $userName . "' LIMIT 1";
 
 		if ($theQueryResult = $db->query($theSQL) ) {
 	
@@ -42,15 +42,30 @@
 				$foundUserName = 1;	
 
 				if ($foundUserName == 1) {
-					echo "<p>Username already exists! Please choose a different Username.</p>";
+					exit("<p>Username already exists! Please choose a different Username.</p>");
 				}			
 			}
-		} 
+		}
+
+
+		# insert data into mysql database
+
+		$commandCrap = "INSERT INTO ".$table_name." VALUES ('".$userName."', '".$firstName."', '".$lastName."', 
+					'".$password."', '".$email."');";
+
+		if ($db->query($commandCrap)) {
+			//echo "New Record has id ".$mysqli->insert_id;
+			echo "<p>Registred successfully!</p>";
+		} else {
+			echo "<p>MySQL error no {$mysqli->errno} : {$mysqli->error}</p>";
+			exit();
+		}
+
+
 	}
 
 	else {
 
-		echo "fuck you asshole";
 		# insert data into mysql database
 		/*
 		$commandCrap = "insert into $table_name VALUES ('"$db->real_escape_string($userName)."', '".$db->real_escape_string($firstName)."', '".$db->real_escape_string($lastName)."', 
