@@ -1,5 +1,17 @@
 <?php
 
+//checks for page url and sets class to "active" if page url request matches current page
+
+function echoActiveClassIfRequestMatches($requestUri)
+{
+  $current_file_name = basename($_SERVER['REQUEST_URI'], ".php");
+
+  if ($current_file_name == $requestUri) {
+      return 'class="active"';
+  }
+  return '';
+}
+
 
 //checks to see if user is logged in /////
 function isUserLoggedIn() {
