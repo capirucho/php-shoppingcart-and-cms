@@ -10,9 +10,9 @@ require 'shoppingcart_functions.php';
 // Main Body  /////
 
 // check if user has logged in /////
-if ( !isUserLoggedIn() ) {
-	header("Location: admin_login.php");
-}
+//if ( !isUserLoggedIn() ) {
+//	header("Location: admin_login.php");
+//}
 
 ?>
 
@@ -46,7 +46,12 @@ if ( !isUserLoggedIn() ) {
 		<div id="main_wrapper">
 			<header class="clearfix">
 				<h1>Abuelita's House of Tamales</h1>
-				<?php require 'admin_site_nav.php' ?>
+				<?php 
+					$currentPage = basename($_SERVER['PHP_SELF']);
+					if ($currentPage != "admin_login.php") {
+						require 'admin_site_nav.php';
+					}
+				?>
 				<div class="login_status">
 					<?php
 						if ( isUserLoggedIn() ) {

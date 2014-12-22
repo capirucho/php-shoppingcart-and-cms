@@ -42,7 +42,8 @@
 				$foundUserName = 1;	
 
 				if ($foundUserName == 1) {
-					exit("<p>Username already exists! Please choose a different Username.</p>");
+					$message = "Username already exists! Please choose a different Username.";
+					header("Location: admin_users.php?foundUserName=$message");
 				}			
 			}
 		}
@@ -55,7 +56,8 @@
 
 		if ($db->query($commandCrap)) {
 			//echo "New Record has id ".$mysqli->insert_id;
-			echo "<p>Registred successfully!</p>";
+			$message = "User registered successfully!";
+			header("Location: admin_users.php?userAdded=$message");
 		} else {
 			echo "<p>MySQL error no {$mysqli->errno} : {$mysqli->error}</p>";
 			exit();
@@ -66,6 +68,7 @@
 
 	else {
 
+		echo "Please fill in all fields.";
 		# insert data into mysql database
 		/*
 		$commandCrap = "insert into $table_name VALUES ('"$db->real_escape_string($userName)."', '".$db->real_escape_string($firstName)."', '".$db->real_escape_string($lastName)."', 

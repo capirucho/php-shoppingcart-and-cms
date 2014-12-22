@@ -104,6 +104,11 @@ th, td {
 	float: left;
 }
 
+#login_page {
+	width: 400px;
+	margin: 0 auto;
+}
+
 .login_status {
 	float: right;
 	padding: 10px 15px;
@@ -120,6 +125,16 @@ section#employees h2 {
 	float: left;
 }
 section#employees .add_employee {
+	width: 200px;
+	float: right;
+	margin: 20px 0 10px 0;
+}
+
+section#products h2 {
+	width: 300px;
+	float: left;
+}
+section#products .add_products {
 	width: 200px;
 	float: right;
 	margin: 20px 0 10px 0;

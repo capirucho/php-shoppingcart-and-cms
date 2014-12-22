@@ -1,10 +1,31 @@
-<?php require 'header.php'; ?>
+<?php 
 
+
+require 'header.php'; 
+
+// check if user has logged in /////
+if ( !isUserLoggedIn() ) {
+	header("Location: admin_login.php");
+}
+
+
+?>
+
+<?php 
+	if ( isset($_GET['foundUserName']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-danger\">".$_GET['foundUserName']."</div>";
+	}
+
+	if ( isset($_GET['userAdded']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-success\">".$_GET['userAdded']."</div>";
+	}
+
+?>
 
 <section id="employees">
 	<div class="clearfix">
 		<h2>Current Admin Users</h2>
-		<div class="add_employee"><button class="btn btn-default" type="button" data-toggle="modal" data-target="#addEmpForm">Add Admin User</button></div>
+		<div class="add_employee"><button class="btn btn-default" type="button" data-toggle="modal" data-target="#addEmpForm">Add Employee</button></div>
 	</div>
 	<table id="employee_list" class="table table-striped">
 		<tr>

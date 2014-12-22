@@ -45,7 +45,7 @@ if ( check_input( $_POST ) ) {
 			//echo $data->email_address."<br>";
 			$_SESSION['username'] = $data->username;
 			//$_SESSION['loggedIn'] = "yes";
-			header("Location: admin_home.php");			
+			header("Location: admin_orders.php");			
 		}
 		else {
 			header("Location: admin_login.php");	
