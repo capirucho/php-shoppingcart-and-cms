@@ -130,14 +130,28 @@ section#employees .add_employee {
 	margin: 20px 0 10px 0;
 }
 
+section#products .view_categories {
+	float: left;
+	margin: 22px 0 0 0;
+}
+
 section#products h2 {
-	width: 300px;
+	width: 240px;
 	float: left;
 }
 section#products .add_products {
 	width: 200px;
 	float: right;
 	margin: 20px 0 10px 0;
+}
+
+#addCategoryForm ol.current_cats  {
+	padding: 0;
+}
+
+#addCategoryForm ol.current_cats li {
+	float: left;
+	margin: 0 5px 0 20px;
 }
 
 #employee_list {

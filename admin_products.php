@@ -4,71 +4,94 @@
 require 'header.php'; 
 
 // check if user has logged in /////
-if ( !isUserLoggedIn() ) {
-	header("Location: admin_login.php");
-}
+	if ( !isUserLoggedIn() ) {
+		header("Location: admin_login.php");
+	}
 
 
 ?>
 
 <?php 
-	if ( isset($_GET['someParamOne']) ) {
-		echo "<div role=\"alert\" class=\"alert alert-danger\">".$_GET['foundUserName']."</div>";
+
+	if ( isset($_GET['categoryNameExists']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-danger\">".$_GET['categoryNameExists']."</div>";
 	}
 
-	if ( isset($_GET['someParamTwo']) ) {
-		echo "<div role=\"alert\" class=\"alert alert-success\">".$_GET['userAdded']."</div>";
+	if ( isset($_GET['categoryAdded']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-success\">".$_GET['categoryAdded']."</div>";
 	}
+
+	if ( isset($_GET['productNameExists']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-danger\">".$_GET['productNameExists']."</div>";
+	}
+	
+
+	//tables to query
+	$product_category_table = "shopcart_product_category";
+	$products_table = "shopcart_products";
+
+	//the queries
+	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
+	//$queryTheCategoryTableAgain = "select * from ".$product_category_table." order by category_name asc;";
+	$queryTheProductsTable = "select * from ".$products_table." order by product_name asc;";
+
+	//the results from the queries
+	$resultsForCategoriesTable = $db->query($queryTheCategoryTable);
+	//$resultsForCategoriesTableAgain = $db->query($queryTheCategoryTableAgain);
+	$resultsForProductsTable = $db->query($queryTheProductsTable);	
+
+	//dump the $resultsForCategoriesTable into an array so result set can be used more than once
+	$finalResultsForCategories = $resultsForCategoriesTable->fetch_all(MYSQLI_ASSOC);	
+
+	//print_r($finalResultsForCategories);
+
 
 ?>
 
 <section id="products">
 	<div class="clearfix">
 		<h2>List Of Tamales Offered</h2>
+		<?php
+
+				//if ($resultsForCategoriesTable->num_rows >= 1) {
+				if ( !empty($finalResultsForCategories) ) {	
+					echo "<a href=# class=\"view_categories\" data-toggle=\"modal\" data-target=\"#addCategoryForm\">view/edit tamal(es) categories</a>";
+				}
+		?>
 		<div class="add_products"><button class="btn btn-default" type="button" data-toggle="modal" data-target="#addProductForm">Add New Tamales</button></div>
 	</div>
 
 
 	<?php 
-		//tables to query
-		$product_category_table = "shopcart_product_category";
-		$products_table = "shopcart_products";
 
-		//the queries
-		$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
-		$queryTheProductsTable = "select * from ".$products_table." order by product_name asc;";
 
-		//the results
-		$resultsForCategoriesTable = $db->query($queryTheCategoryTable);
-		$resultsForProductsTable = $db->query($queryTheProductsTable);		
-
-		if ($resultsForCategoriesTable->num_rows == 0) {
+		//if ($resultsForCategoriesTable->num_rows == 0) {
+		if ( empty($finalResultsForCategories) ) {
 			$needCatMsg = "Click here to add a category.";
 			echo "<div role=\"alert\" class=\"alert alert-warning\">Warning! You do not have any Tamales categories. You can not add Tamales products until you have added at least one category of Tamales. <a href=# class=\"alert-link\" data-toggle=\"modal\" data-target=\"#addCategoryForm\"><strong>".$needCatMsg."</strong></a></div>";
-			//exit();
 		}
+
 	?>
 
 	<table id="product_list" class="table table-striped">
 		<tr>
+			<th>Category</th>	
 			<th>Name</th>
-			<th>Last Name</th>
-			<th>Username</th>
-			<th>Email</th>
+			<th>Image</th>
+			<th>Description</th>
+			<th>Price</th>
 		</tr>
 		<?php 
 
 			if ( $resultsForProductsTable->num_rows == 0 ) {
-				print "<tr><td colspan=\"4\">0 Tamales products found. Please add Tamales.</td></tr>";
+				echo "<tr><td colspan=\"5\">0 Tamales products found. Please add Tamales.</td></tr>";
 				//exit();
 			}
 			while ( $data = $resultsForProductsTable->fetch_object() ) { 
-				print "<tr><td>$data->last_name</td><td>$data->first_name</td><td>$data->username</td><td>$data->email_address</td></tr>";
+				echo "<tr><td>$data->product_category_id</td><td>$data->product_name</td><td>$data->product_image</td><td>$data->product_description</td><td>$data->price</td></tr>";
 				
 			}
-			$resultsForCategoriesTable->free();
-			$resultsForProductsTable->free();
-			$db->close();
+
 		?>
 	</table>
 	
@@ -80,17 +103,44 @@ if ( !isUserLoggedIn() ) {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Add a New Tamales Product</h4>
+        <h4 class="modal-title">Add a New Tamales Product Category</h4>
       </div>
       <div class="modal-body">
         
+      	<?php 
+
+      		//if ( $resultsForCategoriesTable->num_rows >= 1 ) {
+      		if ( !empty($finalResultsForCategories) ) {
+      	?>		
+		      	<div class="panel panel-info panel-default">
+					  <div class="panel-heading">Categories of Tamales already offered:</div>
+					  <div class="panel-body">
+					  	<?php
+							//if ( !empty($finalResultsForCategories) ) {
+
+								foreach ($finalResultsForCategories as $key => $value) {
+								    echo "<span class=\"label label-default\">".$value['category_name']."</span> ";
+								}
+
+							//}
+
+					  		//echo "<ol class=\"current_cats clearfix\">";
+							//while ( $currentCategories = $resultsForCategoriesTable->fetch_object() ) { 
+							//	echo "<li>$currentCategories->category_name</li>";
+							//}
+							//echo "</ol>";
+						?>
+				  </div>
+				</div>
+
+      	<?php } ?>
 
 		<form role="form" action="admin_add_category.php" method="POST">
 		  <div class="form-group">
 		    <label for="userName">Create a new category of Tamales</label>
-		    <input name="category_name" type="text" class="form-control" id="category_name" placeholder="Enter new Tamales Category">
+		    <input name="category_name" type="text" class="form-control" id="category_name" placeholder="Example category: chicken, vegan">
 		  </div>		  
-		  <button type="submit" class="btn btn-default">Create an Admin User</button>
+		  <button type="submit" class="btn btn-default">Create a new Tamales Category</button>
 		</form>
 
 
@@ -114,28 +164,55 @@ if ( !isUserLoggedIn() ) {
       <div class="modal-body">
         
 
-		<form role="form" action="admin_add_user.php" method="POST">
-		  <div class="form-group">
-		    <label for="userName">User Name</label>
-		    <input name="username" type="text" class="form-control" id="username" placeholder="Enter Username (this will be your login name)">
-		  </div>
-		  <div class="form-group">
-		    <label for="firstName">First Name</label>
-		    <input name="first_name" type="text" class="form-control" id="first_name" placeholder="Enter First Name">
-		  </div>
-		  <div class="form-group">
-		    <label for="lastName">Last Name</label>
-		    <input name="last_name" type="text" class="form-control" id="last_name" placeholder="Enter Last Name">
-		  </div>		  		  		  
-		  <div class="form-group">
-		    <label for="exampleInputPassword1">Password</label>
-		    <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-		  </div>
-		  <div class="form-group">
-		    <label for="UserEmail">Email address</label>
-		    <input name="email_address" type="email" class="form-control" id="email_address" placeholder="Enter email">
-		  </div>		  
-		  <button type="submit" class="btn btn-default">Create an Admin User</button>
+		<form role="form" action="admin_add_product.php" method="POST">
+			
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Step 1</h3>
+			  </div>
+			  <div class="panel-body">
+
+				<div class="form-group">
+					<label for="category">Choose Tamales Category</label>
+					<select name="product_category_id" id="category" class="form-control">
+					    <!--<option selected="selected" value="" disabled="disabled">-- select tamales category</option>-->
+
+					    <?php 
+
+					    		foreach ($finalResultsForCategories as $key => $value) {
+					    			echo "<option name=\"product_category_id\" id=\"product_category_id\" value=\"".$value['product_category_id']."\">".$value['category_name']."</option>";
+					    		}   
+					    ?>
+					</select>
+				</div>
+
+			  </div>
+			</div>
+
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Step 2</h3>
+			  </div>
+			  <div class="panel-body">
+				  <div class="form-group">
+				    <label for="product_name">Tamales Name</label>
+				    <input name="product_name" type="text" class="form-control" id="product_name" placeholder="Name for new Tamales">
+				  </div>
+				  <div class="form-group">
+				    <label for="product_image">Image for this type of Tamales</label>
+				    <input name="product_image" type="text" class="form-control" id="product_image" placeholder="enter url">
+				  </div>
+				  <div class="form-group">
+				    <label for="product_description">Describe it!</label>
+				    <textarea name="product_description" class="form-control" id="last_name" placeholder="describe how delecious it will be, and it's ingredients"></textarea>
+				  </div>		  		  		  
+				  <div class="form-group">
+				    <label for="price">Price</label>
+				    <input name="price" type="text" class="form-control" id="price" placeholder="Enter price for a dozen">
+				  </div>	  
+				  <button type="submit" class="btn btn-success">Create new Tamales product</button>
+			  </div>
+			</div>
 		</form>
 
 
@@ -147,6 +224,13 @@ if ( !isUserLoggedIn() ) {
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<?php
+
+	$resultsForCategoriesTable->free();
+	$resultsForProductsTable->free();
+	$db->close();
+
+?>
 
 <?php require 'footer.php'; ?>
 
