@@ -82,7 +82,7 @@ if ( !isUserLoggedIn() ) {
 		    <label for="UserEmail">Email address</label>
 		    <input name="email_address" type="email" class="form-control" id="email_address" placeholder="Enter email">
 		  </div>		  
-		  <button type="submit" class="btn btn-default">Create an Admin User</button>
+		  <button type="submit" class="btn btn-success">Create an Admin User</button>
 		</form>
 
 

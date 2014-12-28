@@ -9,12 +9,12 @@
 
 
 	// user defined variables /////
-	$table_name = "shopcart_admin_users";
+	$table_name = "shopcart_products";
 
 	function check_input ( $form_array ) {
 
-		if ( $form_array[ 'username' ] && $form_array[ 'first_name' ] && $form_array[ 'last_name'] 
-			&& $form_array['password'] && $form_array['email_address'] ) {
+		if ( $form_array[ 'product_category_id' ] && $form_array[ 'product_name' ] && $form_array[ 'product_image' ] 
+			&& $form_array['product_description'] && $form_array['price'] ) {
 		
 			return 1;			
 		}
@@ -25,41 +25,41 @@
 	// Main Body  /////
 
 	if ( check_input( $_POST ) ) {
+		$catId = $db->real_escape_string( $_POST['product_category_id'] );
+		$prodName = $db->real_escape_string( $_POST['product_name'] );
+		$prodImage = $db->real_escape_string( $_POST['product_image'] );
+		$prodDescription = $db->real_escape_string( $_POST['product_description'] );
+		$price = $db->real_escape_string( $_POST['price'] );
 
-		$userName = $db->real_escape_string( $_POST['username'] );
-		$firstName = $db->real_escape_string( $_POST['first_name'] );
-		$lastName = $db->real_escape_string( $_POST['last_name'] );
-		$password = $db->real_escape_string( $_POST['password'] );
-		$email = $_POST['email_address'];
-
-		# check if username exist insert
-		$foundUserName = 0;
-		$theSQL = "SELECT username FROM ".$table_name." WHERE username = '" . $userName . "' LIMIT 1";
+		# check if product name exist
+		$productNameExists = 0;
+		$theSQL = "SELECT product_name FROM ".$table_name." WHERE product_name = '" . $prodName . "' LIMIT 1";
 
 		if ($theQueryResult = $db->query($theSQL) ) {
 	
 			if ( $data = $theQueryResult->fetch_object() ) {
-				$foundUserName = 1;	
+				$productNameExists = 1;	
 
-				if ($foundUserName == 1) {
-					$message = "Username already exists! Please choose a different Username.";
-					header("Location: admin_users.php?foundUserName=$message");
+				if ($productNameExists == 1) {
+					$message = "Product Name already exists! Please choose a different name for these Tamales.";
+					header("Location: admin_products.php?productNameExists=$message");
+					exit();
 				}			
 			}
 		}
 
 
-		# insert data into mysql database
+		# insert product data into mysql database
 
-		$commandCrap = "INSERT INTO ".$table_name." VALUES ('".$userName."', '".$firstName."', '".$lastName."', 
-					'".$password."', '".$email."');";
+		$insertProdQuery = "INSERT INTO ".$table_name." VALUES ('','".$catId."', '".$prodName."', '".$prodImage."', '".$prodDescription."', 
+					'".$price."');";
 
-		if ($db->query($commandCrap)) {
+		if ($db->query($insertProdQuery)) {
 			//echo "New Record has id ".$mysqli->insert_id;
-			$message = "User registered successfully!";
-			header("Location: admin_users.php?userAdded=$message");
+			$message = "New Tamales product added successfully!";
+			header("Location: admin_products.php?productAdded=$message");
 		} else {
-			echo "<p>MySQL error no {$mysqli->errno} : {$mysqli->error}</p>";
+			echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
 			exit();
 		}
 

@@ -24,6 +24,10 @@ require 'header.php';
 	if ( isset($_GET['productNameExists']) ) {
 		echo "<div role=\"alert\" class=\"alert alert-danger\">".$_GET['productNameExists']."</div>";
 	}
+
+	if ( isset($_GET['noBlanks']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-warning\">".$_GET['noBlanks']."</div>";
+	}	
 	
 
 	//tables to query
@@ -33,7 +37,10 @@ require 'header.php';
 	//the queries
 	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
 	//$queryTheCategoryTableAgain = "select * from ".$product_category_table." order by category_name asc;";
-	$queryTheProductsTable = "select * from ".$products_table." order by product_name asc;";
+	//$queryTheProductsTable = "select * from ".$products_table." order by product_name asc;";
+	$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join shopcart_product_category on shopcart_products.product_category_id = shopcart_product_category.product_category_id ORDER BY shopcart_product_category.category_name;";
+
+
 
 	//the results from the queries
 	$resultsForCategoriesTable = $db->query($queryTheCategoryTable);
@@ -88,7 +95,7 @@ require 'header.php';
 				//exit();
 			}
 			while ( $data = $resultsForProductsTable->fetch_object() ) { 
-				echo "<tr><td>$data->product_category_id</td><td>$data->product_name</td><td>$data->product_image</td><td>$data->product_description</td><td>$data->price</td></tr>";
+				echo "<tr><td>$data->category_name</td><td>$data->product_name</td><td>$data->product_image</td><td>$data->product_description</td><td>$data->price</td></tr>";
 				
 			}
 
@@ -140,7 +147,7 @@ require 'header.php';
 		    <label for="userName">Create a new category of Tamales</label>
 		    <input name="category_name" type="text" class="form-control" id="category_name" placeholder="Example category: chicken, vegan">
 		  </div>		  
-		  <button type="submit" class="btn btn-default">Create a new Tamales Category</button>
+		  <button type="submit" class="btn btn-success">Create a new Tamales Category</button>
 		</form>
 
 

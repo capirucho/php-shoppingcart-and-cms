@@ -1,0 +1,210 @@
+/* start: reset  */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers *
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+*/
+/* end: reset */
+
+/* start: clearfix */
+
+/*.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+ */
+/*.clearfix { display: inline-block; }*/
+/* start commented backslash hack \*/
+/* * html .clearfix { height: 1%; } */
+/* .clearfix { display: block; } */
+/* close commented backslash hack */
+
+/* end: clearfix */
+
+h1 {
+	font-size: 28px;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+h3 {
+	font-size: 16px;
+}
+
+header, section {
+	padding: 10px;
+}
+
+th {
+	font-weight: bold;
+}
+
+th, td {
+	padding: 10px;
+}
+
+
+
+
+.main.container {
+	margin-top: 75px;
+}
+
+.footer {
+	margin: 50px 0 25px 0;
+	text-align: center;
+}
+
+
+/* homepage */
+.jumbotron {
+	background-image: url('http://graphics8.nytimes.com/images/2012/12/19/dining/19TAMALES1_SPAN/19TAMALES1-superJumbo.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 60%;
+}
+
+.jumbotron {
+	color: red;
+}
+
+
+.prod_img {
+	max-width: 90%;
+}
+
+
+.admin_nav {
+	float: left;
+}
+
+#login_page {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.login_status {
+	float: right;
+	padding: 10px 15px;
+}
+
+.admin_nav li {
+	float: left;
+	list-style: none;
+	margin: 0 0 0 15px;
+}
+
+section#employees h2 {
+	width: 200px;
+	float: left;
+}
+section#employees .add_employee {
+	width: 200px;
+	float: right;
+	margin: 20px 0 10px 0;
+}
+
+section#products .view_categories {
+	float: left;
+	margin: 22px 0 0 0;
+}
+
+section#products h2 {
+	width: 240px;
+	float: left;
+}
+section#products .add_products {
+	width: 200px;
+	float: right;
+	margin: 20px 0 10px 0;
+}
+
+#addCategoryForm ol.current_cats  {
+	padding: 0;
+}
+
+#addCategoryForm ol.current_cats li {
+	float: left;
+	margin: 0 5px 0 20px;
+}
+
+#employee_list {
+	margin-top: 10px;
+}
+
+#employee_list th {
+	text-align: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

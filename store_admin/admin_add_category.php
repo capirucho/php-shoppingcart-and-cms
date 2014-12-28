@@ -34,11 +34,12 @@
 		if ($theQueryResult = $db->query($theSQL) ) {
 	
 			if ( $data = $theQueryResult->fetch_object() ) {
-				$foundUserName = 1;	
+				$foundCategory = 1;	
 
-				if ($foundUserName == 1) {
-					$message = "That category already exists! Please choose a different category.";
+				if ($foundCategory == 1) {
+					$message = "That category already exists! Please enter a different category.";
 					header("Location: admin_products.php?categoryNameExists=$message");
+					exit();
 				}			
 			}
 		}
@@ -62,7 +63,10 @@
 
 	else {
 
-		echo "Please fill in all fields.";
+			$message = "Please fill in all fields!";
+			header("Location: admin_products.php?noBlanks=$message");
+
+		//echo "Please fill in all fields.";
 		# insert data into mysql database
 		/*
 		$commandCrap = "insert into $table_name VALUES ('"$db->real_escape_string($userName)."', '".$db->real_escape_string($firstName)."', '".$db->real_escape_string($lastName)."', 
