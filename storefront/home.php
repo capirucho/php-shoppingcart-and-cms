@@ -13,7 +13,7 @@ require 'header.php';
   $products_table = "shopcart_products";
 
   //the queries
-  $queryTheProductsTable = "select * from ".$products_table." order by product_name asc limit 3;";
+  $queryTheProductsTable = "select * from ".$products_table." order by date_added desc limit 6;";
   //$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join shopcart_product_category on shopcart_products.product_category_id = shopcart_product_category.product_category_id ORDER BY shopcart_product_category.category_name;";
 
 
@@ -21,10 +21,10 @@ require 'header.php';
   //the results from the queries
   $resultsForProductsTable = $db->query($queryTheProductsTable);  
 
-  //dump the $resultsForCategoriesTable into an array so result set can be used more than once
+  //place the $resultsForCategoriesTable into an array so result set can be used more than once
   $arrayResultsForProducts = $resultsForProductsTable->fetch_all(MYSQLI_ASSOC); 
 
-  //print_r($finalResultsForCategories);
+  //print_r($arrayResultsForProducts);
 
 
 
@@ -38,10 +38,11 @@ require 'header.php';
         <p><a role="button" href="#" class="btn btn-lg btn-success">Get started today</a></p>
       </div>
 
+      <h1>Our Newest Tamales Offerings</h1>
       <?php 
 
-      $PHPSESSID=session_id(); 
-      echo $PHPSESSID;
+      //$PHPSESSID=session_id(); 
+      //echo $PHPSESSID;
       
       //print_r($arrayResultsForProducts);
       if ( !empty($arrayResultsForProducts) ) {
@@ -50,8 +51,8 @@ require 'header.php';
 
       <?php
             foreach ($arrayResultsForProducts as $key => $value) {
-                echo "<div class=\"col-sm-4\"><h2>".$value['product_name']."</h2><img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\"><p>".$value['product_description']
-                ."</p><p><a role=\"button\" href=\"#\" class=\"btn btn-primary\">View details »</a></p></div>";
+                echo "<div class=\"col-sm-4\"><h3>".$value['product_name']."</h3><img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\"><p>
+                <a role=\"button\" href=\"product_detail.php?product_id=".$value['product_id']."\" class=\"btn btn-success view-details\">View details »</a></p></div>";
             }
       ?>
       <?php 

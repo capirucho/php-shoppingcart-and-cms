@@ -51,7 +51,7 @@
 
 		# insert product data into mysql database
 
-		$insertProdQuery = "INSERT INTO ".$table_name." VALUES ('','".$catId."', '".$prodName."', '".$prodImage."', '".$prodDescription."', 
+		$insertProdQuery = "INSERT INTO ".$table_name." VALUES ('','".$catId."', now(), '".$prodName."', '".$prodImage."', '".$prodDescription."', 
 					'".$price."');";
 
 		if ($db->query($insertProdQuery)) {

@@ -122,7 +122,7 @@ th, td {
 
 
 .prod_img {
-	max-width: 90%;
+	max-width: 85%;
 }
 
 
@@ -146,10 +146,27 @@ th, td {
 	margin: 0 0 0 15px;
 }
 
-section#employees h2 {
-	width: 200px;
-	float: left;
+.btn.view-details {
+	margin: 10px 0 0 0;
 }
+
+/* product page */
+
+
+section#product-detail h3 {
+	margin: 0 0 10px 0;
+}
+
+section#product-detail .description {
+	margin: 20px 0 0 0;
+}
+
+section#product-detail .add-to-cart {
+	display: block;
+	margin: 15px 0 0 0;
+}
+
+/*
 section#employees .add_employee {
 	width: 200px;
 	float: right;
@@ -187,6 +204,8 @@ section#products .add_products {
 #employee_list th {
 	text-align: left;
 }
+
+*/
 
 
 
