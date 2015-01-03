@@ -155,10 +155,18 @@ th, td {
 
 section#product-detail h3 {
 	margin: 0 0 10px 0;
+	font-weight: bold;
+	font-size: 18px;
 }
 
 section#product-detail .description {
 	margin: 20px 0 0 0;
+}
+
+section#product-detail p.price {
+	margin: 10px 0 10px 0;
+	font-weight: bold;
+	font-size: 16px;
 }
 
 section#product-detail .add-to-cart {

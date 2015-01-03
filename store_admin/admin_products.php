@@ -31,14 +31,14 @@ require 'header.php';
 	
 
 	//tables to query
-	$product_category_table = "shopcart_product_category";
-	$products_table = "shopcart_products";
+	$product_category_table = "product_category";
+	$products_table = "products";
 
 	//the queries
 	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
 	//$queryTheCategoryTableAgain = "select * from ".$product_category_table." order by category_name asc;";
 	//$queryTheProductsTable = "select * from ".$products_table." order by product_name asc;";
-	$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join shopcart_product_category on shopcart_products.product_category_id = shopcart_product_category.product_category_id ORDER BY shopcart_product_category.category_name;";
+	$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join product_category on products.product_category_id = product_category.product_category_id ORDER BY product_category.category_name;";
 
 
 

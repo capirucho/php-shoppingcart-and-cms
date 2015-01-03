@@ -9,7 +9,7 @@
 
 
 	// user defined variables /////
-	$table_name = "shopcart_products";
+	$table_name = "products";
 
 	function check_input ( $form_array ) {
 

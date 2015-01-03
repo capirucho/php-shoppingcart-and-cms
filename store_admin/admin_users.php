@@ -36,7 +36,7 @@ if ( !isUserLoggedIn() ) {
 		</tr>
 		<?php 
 
-			$table_name = "shopcart_admin_users";
+			$table_name = "admin_users";
 			$command = "select * from ".$table_name." order by username asc;";
 			$result = $db->query($command);		
 

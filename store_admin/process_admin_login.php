@@ -7,7 +7,7 @@ require 'shoppingcart_functions.php';
 
 
 // user defined variables /////
-$login_table = "shopcart_admin_users";
+$login_table = "admin_users";
 
 
 // user defined functions for process_admin_login.php page /////

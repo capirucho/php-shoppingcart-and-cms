@@ -17,8 +17,8 @@ require 'header.php';
 		$productId = $db->real_escape_string( $_GET['product_id'] ); 
 		echo $productId;
 	//tables to query
-	$product_category_table = "shopcart_product_category";
-	$products_table = "shopcart_products";
+	$product_category_table = "product_category";
+	$products_table = "products";
 
 	//the queries
 	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
@@ -38,8 +38,7 @@ require 'header.php';
 		
 	//print_r($finalResultsForCategories);
 
-	//$PHPSESSID=session_id(); 
-	//echo $PHPSESSID;
+
 
 	//print_r($arrayResultsForProducts);
 
@@ -59,16 +58,21 @@ require 'header.php';
 
 
       if ( !empty($arrayResultsForProducts) ) {
+      ?>
+      <form method="post" action="add_to_cart.php">
+
+      	<?php
 	      	foreach ($arrayResultsForProducts as $key => $value) {
 	          echo "<div class=\"row\"><div class=\"col-md-4\"><h3 class=\"product-name\">".$value['product_name']."</h3><img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\"></div>
-	          		<div class=\"col-md-8\"><p class=\"description\">".$value['product_description']."</p><p>".$value['price']."</p><form><select><option value=\"\">1 dozen</option></select><button type=\"submit\" class=\"btn btn-success add-to-cart\">Add to cart</button></form></div>";
-			  
-			  //echo "<div class=\"col-sm-4\"><h3>".$value['product_name']."</h3><img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\"><p>
-			  //<a role=\"button\" href=\"product_detail.php?product_id=".$value['product_id']."\" class=\"btn btn-success view-details\">View details »</a></p></div>";
-	        }   
-      }
+	          		<div class=\"col-md-8\"><p class=\"description\">".$value['product_description']."</p><p class=\"price\">$".$value['price']." per dozen (1 dozen = 12 tamales)</p><select name=\"quantity\"><option value=\"1\">1 dozen</option><option value=\"2\">2 dozen</option><option value=\"3\">3 dozen</option><option value=\"4\">4 dozen</option></select><button type=\"submit\" class=\"btn btn-success add-to-cart\">Add to cart</button></div>";
+	        }
+		?>
+      	<input name="user_session_id" type="hidden" value="<?php echo $USER_SESSID ?>">
+      	<input name="pid" type="hidden" value="<?php echo $value['product_id'] ?>">
 
-      ?>
+		</form>	  
+
+	    <?php } ?>  
 
 
 	</div>

@@ -10,11 +10,11 @@ require 'header.php';
 
 
   //tables to query
-  $products_table = "shopcart_products";
+  $products_table = "products";
 
   //the queries
   $queryTheProductsTable = "select * from ".$products_table." order by date_added desc limit 6;";
-  //$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join shopcart_product_category on shopcart_products.product_category_id = shopcart_product_category.product_category_id ORDER BY shopcart_product_category.category_name;";
+  //$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join product_category on products.product_category_id = product_category.product_category_id ORDER BY product_category.category_name;";
 
 
 
