@@ -52,10 +52,10 @@
 
 		# insert data into mysql database
 
-		$commandCrap = "INSERT INTO ".$table_name." VALUES ('".$userName."', '".$firstName."', '".$lastName."', 
+		$addUserQuery = "INSERT INTO ".$table_name." VALUES ('".$userName."', '".$firstName."', '".$lastName."', 
 					'".$password."', '".$email."');";
 
-		if ($db->query($commandCrap)) {
+		if ($db->query($addUserQuery)) {
 			//echo "New Record has id ".$mysqli->insert_id;
 			$message = "User registered successfully!";
 			header("Location: admin_users.php?userAdded=$message");
