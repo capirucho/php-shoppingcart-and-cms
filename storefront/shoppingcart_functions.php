@@ -43,5 +43,13 @@ function logoutUser() {
 
 }
 
+function showTotalItemsInCart ($numOfItemsInCart) {
+	global $numOfItemsInCart;
+	$fuckoff = $numOfItemsInCart;
+	return $fuckOff;
+
+	//header("Location: header.php?cart=$message");
+}
+
 
 ?>

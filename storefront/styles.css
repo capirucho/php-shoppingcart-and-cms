@@ -174,6 +174,23 @@ section#product-detail .add-to-cart {
 	margin: 15px 0 0 0;
 }
 
+/* cart  */
+
+.cart-item {
+	margin: 0 0 10px 0;
+	border-bottom: 1px solid gray;
+}
+
+.cart-image {
+	width: 100px;
+	margin: 10px;
+}
+
+.total {
+	text-align: right;
+	margin: 0 50px 0 0;
+}
+
 /*
 section#employees .add_employee {
 	width: 200px;

@@ -13,7 +13,7 @@
 
 		if ($db->query($addToCartQuery)) {
 			$message = "Added to Cart!";
-			header("Location: show_cart.php?userAdded=$message");
+			header("Location: show_cart.php?addedToCart=$message");
 		} else {
 			echo "<p>MySQL error no {$mysqli->errno} : {$mysqli->error}</p>";
 			exit();
