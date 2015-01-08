@@ -39,7 +39,7 @@
 
 
 	//the query
-	$cartItemsQuery = "select product_name, product_image, sum(quantity) as quantity, price, session_id from ".$productsTable." left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' GROUP BY products.product_name;";
+	$cartItemsQuery = "select product_name, product_image, sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from ".$productsTable." left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' GROUP BY products.product_name;";
 
 
 	//the results from the queries
@@ -75,26 +75,39 @@
 <?php while ( $data = $resultsForItemsInCart->fetch_object() ) { ?>
 
 		<div class="row cart-item clearfix">
-			<div class="pull-left"><img src="<?php echo $data->product_image; ?>" class="cart-image"></div>
-			<div class="pull-left">
+			<div class="col-md-2"><img src="<?php echo $data->product_image; ?>" class="cart-image"></div>
+			<div class="col-md-2">
 				<h3><?php echo $data->product_name; ?></h3>
 				price per dozen: <?php echo $data->price; ?><br>
-				<?php echo $data->quantity; ?> dozen <a href="update_cart.php?edit">change</a>
+				<?php echo $data->quantity; ?> dozen <a href="update_cart.php?edit">change amount</a>
 			</div>
-			<div class="total pull-left">
+			<div class="col-md-2 item-total pull-left">
 				<?php 
 					$item_total = $data->price * $data->quantity;
 					//$ctotal = number_format($item_total, 2);
 					$grand_total = $grand_total + $item_total;
 
 					echo "$".$item_total;
-				?>
+				?>					
+			</div>
+			<div class="col-md-6 item-total pull-left">
+				<?php echo "<a href=\"update_cart.php?delete=".$data->product_id."\">delete this item</a>"; ?>	
 			</div>
 		</div>
 
 <?php } //end while loop ?>
 <div class="row total">
-	<?php echo "grand total: $".$grand_total; ?>
+	<div class="panel panel-info">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Subtotal</h3>
+	  </div>
+	  <div class="panel-body">
+	    <span class="amount"><?php echo "$".$grand_total; ?></span><br>
+	    Shipping and Tax costs not included. These are added at checkout.
+	  </div>
+	</div>
+
+	
 </div>
 
 

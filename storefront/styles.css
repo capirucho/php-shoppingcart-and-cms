@@ -177,18 +177,33 @@ section#product-detail .add-to-cart {
 /* cart  */
 
 .cart-item {
-	margin: 0 0 10px 0;
+	margin: 10px 0 0 0;
 	border-bottom: 1px solid gray;
+}
+
+.cart-item h3 {
+	margin: 0 0 0 0;
 }
 
 .cart-image {
 	width: 100px;
-	margin: 10px;
+	margin: 0 10px 10px 0;
+}
+
+.item-total {
+	text-align: right;
+	font-size: 18px;
+	font-weight: bold;	
 }
 
 .total {
 	text-align: right;
-	margin: 0 50px 0 0;
+	margin: 0 0 0 0;
+}
+
+.amount {
+	font-size: 22px;
+	font-weight: bold;
 }
 
 /*

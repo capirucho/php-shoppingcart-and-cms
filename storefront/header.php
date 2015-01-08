@@ -62,7 +62,7 @@ require 'shoppingcart_functions.php';
 		          <ul class="nav navbar-nav navbar-right">
 		            <li><a href="../navbar/">Sign in</a></li>
 		            <li><a href="../navbar/">Create an account</a> </li>
-		            <li><a href=#>Cart: <?php echo $_SESSION["numOfItemsInCart"]; ?></a></li>
+		            <li><a href=#>Cart: <?php //echo $_SESSION["numOfItemsInCart"]; ?></a></li>
 		          </ul>
 		        </div><!--/.nav-collapse -->
 		      </div>
