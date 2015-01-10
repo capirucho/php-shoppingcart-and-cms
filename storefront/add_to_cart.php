@@ -15,7 +15,7 @@
 			$message = "Added to Cart!";
 			header("Location: show_cart.php?addedToCart=$message");
 		} else {
-			echo "<p>MySQL error no {$mysqli->errno} : {$mysqli->error}</p>";
+			echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
 			exit();
 		}
 

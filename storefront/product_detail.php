@@ -67,7 +67,7 @@ require 'header.php';
 	          		<div class=\"col-md-8\"><p class=\"description\">".$value['product_description']."</p><p class=\"price\">$".$value['price']." per dozen (1 dozen = 12 tamales)</p><select name=\"quantity\"><option value=\"1\">1 dozen</option><option value=\"2\">2 dozen</option><option value=\"3\">3 dozen</option><option value=\"4\">4 dozen</option></select><button type=\"submit\" class=\"btn btn-success add-to-cart\">Add to cart</button></div>";
 	        }
 		?>
-      	<input name="user_session_id" type="hidden" value="<?php echo $USER_SESSID ?>">
+      	<!--<input name="user_session_id" type="hidden" value="<?php// echo $USER_SESSID ?>"> -->
       	<input name="pid" type="hidden" value="<?php echo $value['product_id'] ?>">
 
 		</form>	  
