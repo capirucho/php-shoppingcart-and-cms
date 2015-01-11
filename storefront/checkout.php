@@ -32,7 +32,7 @@ create_order.php
 	- show order: product, qty, subtotal, tax, delivery, grandtotal
     - place oder (button)
  - place_order.php
-      - checkout_status on cart table to complete
+      - change checkout_status on cart table to complete
       - if place order - set order status on order table to complete (place_order.php)
       - redirect user to sucess.php
  
@@ -49,48 +49,54 @@ create_order.php
 					<div class="row">
 						<div class="col-xs-6 col-sm-6">
 							  <div class="form-group">
-							    <label for="userName">First Name</label>
-							    <input name="username" type="text" class="form-control" id="username" placeholder="Enter Username (this will be your login name)">
+							    <label for="first_name">First Name</label>
+							    <input name="first_name" type="text" class="form-control" id="first_name" placeholder="First Name">
 							  </div>
 							</div>
 						<div class="col-xs-6 col-sm-6">
 							  <div class="form-group">
-							    <label for="firstName">Last Name</label>
-							    <input name="first_name" type="text" class="form-control" id="first_name" placeholder="Enter First Name">
+							    <label for="last_name">Last Name</label>
+							    <input name="last_name" type="text" class="form-control" id="last_name" placeholder="Last Name">
 							  </div>
 							</div>
 					</div>
 
 					  <div class="form-group">
-					    <label for="lastName">Email Address</label>
-					    <input name="last_name" type="text" class="form-control" id="last_name" placeholder="Enter Last Name">
+					    <label for="email_address">Email Address</label>
+					    <input name="email_address" type="text" class="form-control" id="email_address" placeholder="Enter Email">
 					  </div>			  
 					  <div class="form-group">
-					    <label for="UserEmail">Username</label>
-					    <input name="email_address" type="email" class="form-control" id="email_address" placeholder="Enter email">
+					    <label for="username">Username</label>
+					    <input name="username" type="text" class="form-control" id="username" placeholder="Username (Used to login)">
 					  </div>  		  		  		  
 					  <div class="form-group">
-					    <label for="exampleInputPassword1">Password</label>
-					    <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+					    <label for="password">Password</label>
+					    <input name="password" type="text" class="form-control" id="password" placeholder="Password">
 					  </div>
 
 					<div class="row">
 						<div class="col-xs-6 col-sm-6">
 							  <div class="form-group">
-							    <label for="userName">Credit Card</label>
-							    <input name="username" type="text" class="form-control" id="username" placeholder="Enter Username (this will be your login name)">
+							    <label for="credit_card_type">Credit Card</label>
+									<select name="credit_card_type" size="1" class="form-control">
+										<option value="" selected>Select type of Credit Card</option>
+										<option value="visa">Visa</option>
+										<option value="mastercard">Mastercard</option>
+										<option value="amex">American Express</option>
+										<option value="discover">Discover</option>
+									</select>
 							  </div>
 						</div>
 						<div class="col-xs-6 col-sm-6">
 							  <div class="form-group">
-							    <label for="firstName">CC Number</label>
-							    <input name="first_name" type="text" class="form-control" id="first_name" placeholder="Enter First Name">
+							    <label for="credit_card_number">CC Number</label>
+							    <input name="credit_card_number" type="text" class="form-control" id="credit_card_number" placeholder="Credit Card Number">
 							  </div>
 							</div>
 					</div>
 					  <div class="form-group">
-					    <label for="UserEmail">Expiration Date</label>
-					    <input name="email_address" type="email" class="form-control" id="email_address" placeholder="Enter email">
+					    <label for="credit_card_expiration_date">Expiration Date</label>
+					    <input name="credit_card_expiration_date" type="text" class="form-control" id="credit_card_expiration_date" placeholder="Expiration Date">
 					  </div> 					
 
 				</div>
@@ -98,19 +104,19 @@ create_order.php
 
 				<div class="col-sm-6">
 				  <div class="form-group">
-				    <label for="userName">Phone Number</label>
-				    <input name="username" type="text" class="form-control" id="username" placeholder="Enter Username (this will be your login name)">
+				    <label for="phone">Phone Number</label>
+				    <input name="phone" type="text" class="form-control" id="phone" placeholder="Phone Number">
 				  </div>
 				  <div class="form-group">
-				    <label for="firstName">Address</label>
-				    <input name="first_name" type="text" class="form-control" id="first_name" placeholder="Enter First Name">
+				    <label for="address">Address</label>
+				    <input name="address" type="text" class="form-control" id="address" placeholder="Address">
 				  </div>
 				  <div class="form-group">
-				    <label for="lastName">City</label>
-				    <input name="last_name" type="text" class="form-control" id="last_name" placeholder="Enter Last Name">
+				    <label for="city">City</label>
+				    <input name="city" type="text" class="form-control" id="city" placeholder="City">
 				  </div>		  		  		  
 				  <div class="form-group">
-				    <label for="lastName">State</label>
+				    <label for="state">State</label>
 				    <select name="state" size="1" class="form-control">
 
 						<option value="AL">Alabama</option>
@@ -179,8 +185,8 @@ create_order.php
 					</select>
 				  </div>
 				  <div class="form-group">
-				    <label for="UserEmail">Zip Code</label>
-				    <input name="email_address" type="email" class="form-control" id="email_address" placeholder="Enter email">
+				    <label for="zipcode">Zip Code</label>
+				    <input name="zipcode" type="text" class="form-control" id="zipcode" placeholder="Enter zipcode">
 				  </div>
 				</div>				
 		  </div>		  
