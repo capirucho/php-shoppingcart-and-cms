@@ -34,11 +34,12 @@
 		$password = $db->real_escape_string( $_POST['password'] );
 		$ccType = $db->real_escape_string( $_POST['credit_card_type'] );
 		$ccNumber = $db->real_escape_string( $_POST['credit_card_number'] );
-		$ccExpDate = $db->real_escape_string( $_POST['credit_card_expiration_date'] );
+		//$ccExpDate = $db->real_escape_string( $_POST['credit_card_expiration_date'] );
+		$ccExpDate = date ('Y-m-d', strtotime($_POST['credit_card_expiration_date']));
 		$phone = $db->real_escape_string( $_POST['phone'] );
 		$address = $db->real_escape_string( $_POST['address'] );
 		$city = $db->real_escape_string( $_POST['city'] );
-		$price = $db->real_escape_string( $_POST['state'] );
+		$state = $db->real_escape_string( $_POST['state'] );
 		$zipcode = $db->real_escape_string( $_POST['zipcode'] );
 
 		# check if customer username name exist
@@ -59,17 +60,31 @@
 		}
 
 
-		# insert product data into mysql database
+		# insert customer info data into mysql database
 
-		$insertCustomerQuery = "INSERT INTO ".$customerTable." VALUES ('','".$firstName."', '".$lastName."', '".$emailAddress."', '".$username."', '".$password."', '".$ccType."', '".$ccNumber."', '".$ccExpDate."', '".$phone."', '".$address."', '".$city."', '".$price."', '".$zipcode."');";
+		$insertCustomerQuery = "INSERT INTO ".$customerTable." VALUES ('','".$firstName."', '".$lastName."', '".$emailAddress."', '".$username."', '".$password."', '".$phone."', '".$address."', '".$city."', '".$state."', '".$zipcode."', '".$ccType."', '".$ccNumber."', '".$ccExpDate."');";
 
 		//$insertProdQuery = "INSERT INTO ".$table_name." VALUES ('','".$catId."', now(), '".$prodName."', '".$prodImage."', '".$prodDescription."', 
 					//'".$price."');";
 
 		if ($db->query($insertCustomerQuery)) {
 			//echo "New Record has id ".$mysqli->insert_id;
-			$message = "You have been registered!";
-			header("Location: admin_products.php?registrationSuccess=$message");
+			$customerId = $db->insert_id;
+
+			//query customer table to get customer username so that we can set _session username
+			$queryCustomerTable = "select username from ".$customerTable." where customer_id = ".$customerId.";";
+			if ($customerTableResults = $db->query($queryCustomerTable)) {
+				if ( $data = $customerTableResults->fetch_object() ) {
+					$_SESSION['customer_username'] = $data->username;
+					header("Location: create_order.php?custId=$customerId");
+					//header("Location: home.php");
+				}
+			} else {
+				echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
+			}
+
+			//$message = "Hi ".$_SESSION['customer_username']." you have been registered!";
+			//header("Location: create_order.php?registrationSuccess=$message&custId=$customerId");
 		} else {
 			echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
 			exit();

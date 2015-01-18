@@ -107,9 +107,11 @@
 	    <span class="amount"><?php echo "$".number_format($grand_total,2); ?></span><br>
 	    Shipping and Tax costs not included. These are added at checkout.<br><br>
 	    <form action="checkout.php" method="post">
-	      	<input name="user_session_id" type="hidden" value="<?php echo $USER_SESSID ?>">
-	      	<input name="pid" type="hidden" value="<?php echo $value['product_id'] ?>">
+	      	<!--<input name="user_session_id" type="hidden" value="<?php echo $USER_SESSID ?>">-->
+	      	<!--<input name="pid" type="hidden" value="<?php echo $value['product_id'] ?>">-->
+	      	<?php if ( $grand_total > 0 ) { ?>
 	    	<button type="submit" class="btn btn-primary">Check out</button>
+	    	<?php } ?>
 	    <form>
 	  </div>
 	</div>

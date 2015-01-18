@@ -23,7 +23,7 @@ require 'shoppingcart_functions.php';
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">		
 		<title>Welcome to Abuelita's House of Tamales</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 	    <!-- Bootstrap core CSS -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -52,7 +52,7 @@ require 'shoppingcart_functions.php';
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
 		          </button>
-		          <a href="#" class="navbar-brand">Abuelita's House of Tamales</a>
+		          <a href="home.php" class="navbar-brand">Abuelita's House of Tamales</a>
 		        </div>
 		        <div class="navbar-collapse collapse" id="navbar">
 		          <ul class="nav navbar-nav">
@@ -60,8 +60,21 @@ require 'shoppingcart_functions.php';
 		            <li><a href="#contact">Contact</a></li>
 		          </ul>
 		          <ul class="nav navbar-nav navbar-right">
-		            <li><a href="../navbar/">Sign in</a></li>
-		            <li><a href="../navbar/">Create an account</a> </li>
+		            <li>
+		            	<?php 
+		            		if ( isUserLoggedIn() ) {
+							//welcome user by name and show logout option
+							echo "Hi ".$_SESSION['customer_username'];
+							echo " | <a href=\"customer_logout.php\">logout</a>";
+							}
+							else {
+								echo "<a href=\"customer_login.php\">Sign in</a>";
+							}
+						?>
+		            	
+
+		            </li>
+		            <!--<li><a href="../navbar/">Create an account</a> </li>-->
 		            <li><a href=#>Cart: <?php //echo $_SESSION["numOfItemsInCart"]; ?></a></li>
 		          </ul>
 		        </div><!--/.nav-collapse -->

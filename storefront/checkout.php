@@ -42,7 +42,49 @@ create_order.php
 
 -->
 
+<?php if (!isset($_SESSION['customer_username'])) { ?>
+<div class="panel panel-default">
+  <div class="panel-heading step1header">
+    <h3 class="panel-title">Account Details</h3>
+  </div>
+  <div id="step1" class="panel-body">
+    <div class="row clearfix">
+    	<div class="col-sm-6">
+    		<h2>I'm a New Customer</h2>
+    		<p>
+    			Register for a faster checkout and more.
+    		</p>
+    		<button id="createAccount" type="button" class="btn btn-primary">Create A New Account</button>
+    	</div>
+    	<div class="col-sm-6">
+    		<h2>I'm a Returning Customer</h2>
+			<h3>Login</h3>
+			<form role="form" action="process_customer_login.php" method="post">
+			  <div class="form-group">
+			    <!--<label for="username">Username:</label>-->
+			    <input name="username" type="text" class="form-control" id="username" placeholder="Username">
+			  </div>
+			  <div class="form-group">
+			    <!--<label for="password">Password</label>-->
+			    <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+			    <input id="placeorder" name="placeorder" type="hidden" value="true">
+			  </div>
+			  <button type="submit" class="btn btn-default">Submit</button>
+			</form>
 
+    	</div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading step2header">
+    <h3 class="panel-title">Register</h3>
+  </div>
+  <div id="step2" class="panel-body hidden">
 		<form role="form" action="add_customer_info.php" method="POST">
 			<div class="row">
 				<div class="col-sm-6">
@@ -192,6 +234,26 @@ create_order.php
 		  </div>		  
 		  <button type="submit" class="btn btn-success">Register</button>
 		</form>
+  </div>
+</div>
+
+<?php } ?>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Place order</h3>
+  </div>
+
+  <div id="step3" class="panel-body hidden">
+
+
+
+	step 3 stuff goes here
+
+
+
+  </div>
+</div>
+
 
 
 

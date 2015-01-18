@@ -16,7 +16,7 @@ function echoActiveClassIfRequestMatches($requestUri)
 //checks to see if user is logged in /////
 function isUserLoggedIn() {
 
-	if ( isset($_SESSION['username']) ) {	
+	if ( isset($_SESSION['customer_username']) ) {	
 		return true;
 	}
 	return false;
@@ -41,14 +41,6 @@ function logoutUser() {
 	session_start();
 	session_destroy();
 
-}
-
-function showTotalItemsInCart ($numOfItemsInCart) {
-	global $numOfItemsInCart;
-	$fuckoff = $numOfItemsInCart;
-	return $fuckOff;
-
-	//header("Location: header.php?cart=$message");
 }
 
 
