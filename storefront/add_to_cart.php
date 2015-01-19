@@ -9,7 +9,7 @@
 		//echo $userSessionId;
 		$table_name = "cart";
 
-		$addToCartQuery = "INSERT INTO ".$table_name." VALUES ('','".$userSessionId."', '".$productAdded."', '".$quantity."', now(), default);";
+		$addToCartQuery = "INSERT INTO ".$table_name." VALUES ('','".$userSessionId."', '".$productAdded."', '".$quantity."', now(), default, default);";
 
 		if ($db->query($addToCartQuery)) {
 			$message = "Added to Cart!";
