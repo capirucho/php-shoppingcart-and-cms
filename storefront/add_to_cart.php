@@ -1,15 +1,16 @@
 <?php
-
+	// connect to db and application commonly used function /////
 	require 'shoppingcart_config.php';
 
-	if ( isset($_POST['pid']) && isset($_POST['quantity'] ) )  {
+	if ( isset($_POST['pid'] ) && isset($_POST['quantity'] ) && isset($_POST['unitprice'] ) && isset($_POST['prodname'] ) )  {
 		$productAdded = $db->real_escape_string( $_POST['pid'] );
+		$productName = $db->real_escape_string( $_POST['prodname'] );
 		$quantity = $db->real_escape_string( $_POST['quantity'] );
+		$price = $db->real_escape_string( $_POST['unitprice']);
 		$userSessionId = session_id(); 
-		//echo $userSessionId;
-		$table_name = "cart";
+		$cartTable = "shopcart_order_details";
 
-		$addToCartQuery = "INSERT INTO ".$table_name." VALUES ('','".$userSessionId."', '".$productAdded."', '".$quantity."', now(), default, default);";
+		$addToCartQuery = "INSERT INTO ".$cartTable." VALUES ('','".$userSessionId."', '".$productAdded."', '".$productName."', '".$price."', '".$quantity."', now(), default, default);";
 
 		if ($db->query($addToCartQuery)) {
 			$message = "Added to Cart!";

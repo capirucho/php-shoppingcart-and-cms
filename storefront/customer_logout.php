@@ -1,4 +1,5 @@
 <?php
+	// connect to db and application commonly used functions /////
 	require 'shoppingcart_functions.php';
 	logoutUser();
 

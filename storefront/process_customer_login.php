@@ -1,13 +1,13 @@
 <?php
 
-// connect to db /////
+// connect to db and application commonly used functions /////
 require 'shoppingcart_config.php';
 require 'shoppingcart_functions.php';
 
 
 
 // user defined variables /////
-$login_table = "customer";
+$login_table = "shopcart_customer";
 
 
 // user defined functions for process_admin_login.php page /////
@@ -33,15 +33,11 @@ if ( check_input( $_POST ) ) {
 
 	$theSQL = "SELECT customer_id, username, email_address FROM ".$login_table." WHERE username = '" . mysql_real_escape_string($adminUserName) . "' AND password = '" .  mysql_real_escape_string($adminPassword) . "' LIMIT 1";
 	
-	//$theSQL = "select * from ".$login_table;
 	if ( $theQueryResult = $db->query($theSQL) ) {
 
 		if ( $data = $theQueryResult->fetch_object() ) {
-			//echo $data->username.": ";
-			//echo $data->email_address."<br>";
 			$customerId = $data->customer_id;
 			$_SESSION['customer_username'] = $data->username;
-			//$_SESSION['loggedIn'] = "yes";
 			if ( $placeOrder == true ) {
 				header("Location: create_order.php?custId=$customerId");		
 			}
@@ -59,7 +55,6 @@ if ( check_input( $_POST ) ) {
 	}
 
 	else {
-		//trigger_error("FAILED! the SQLs say:", mysql_error() );
 		print "FAILED! Something went wrong somewhere. This hint may help: ".$db->error;
 	}
 	$db->close();

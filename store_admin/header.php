@@ -1,18 +1,11 @@
 <?php
 
-// connect to db /////
+// connect to db and application commonly used function /////
 require 'shoppingcart_config.php';
 require 'shoppingcart_functions.php';
 
 // user defined functions for admin_home.php page ////
 
-
-// Main Body  /////
-
-// check if user has logged in /////
-//if ( !isUserLoggedIn() ) {
-//	header("Location: admin_login.php");
-//}
 
 ?>
 
@@ -59,11 +52,6 @@ require 'shoppingcart_functions.php';
 							echo "Welcome ".$_SESSION['username'];
 							echo " | <a href=\"logout.php\">logout</a>";
 						}
-						//else {
-							//redirect user to login page
-							//header("Location: admin_login.php");
-						//}
-
 					?>
 				</div>
 			</header>

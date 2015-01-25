@@ -2,14 +2,14 @@
 
 <?php
 
-	// connect to db /////
+	// connect to db and application commonly used function /////
 	require 'shoppingcart_config.php';
 	require 'shoppingcart_functions.php';
 
 
 
 	// user defined variables /////
-	$customerTable = "customer";
+	$customerTable = "shopcart_admin_customer";
 
 	function check_input ( $form_array ) {
 
@@ -34,7 +34,6 @@
 		$password = $db->real_escape_string( $_POST['password'] );
 		$ccType = $db->real_escape_string( $_POST['credit_card_type'] );
 		$ccNumber = $db->real_escape_string( $_POST['credit_card_number'] );
-		//$ccExpDate = $db->real_escape_string( $_POST['credit_card_expiration_date'] );
 		$ccExpDate = date ('Y-m-d', strtotime($_POST['credit_card_expiration_date']));
 		$phone = $db->real_escape_string( $_POST['phone'] );
 		$address = $db->real_escape_string( $_POST['address'] );
@@ -64,11 +63,8 @@
 
 		$insertCustomerQuery = "INSERT INTO ".$customerTable." VALUES ('','".$firstName."', '".$lastName."', '".$emailAddress."', '".$username."', '".$password."', '".$phone."', '".$address."', '".$city."', '".$state."', '".$zipcode."', '".$ccType."', '".$ccNumber."', '".$ccExpDate."');";
 
-		//$insertProdQuery = "INSERT INTO ".$table_name." VALUES ('','".$catId."', now(), '".$prodName."', '".$prodImage."', '".$prodDescription."', 
-					//'".$price."');";
 
 		if ($db->query($insertCustomerQuery)) {
-			//echo "New Record has id ".$mysqli->insert_id;
 			$customerId = $db->insert_id;
 
 			//query customer table to get customer username so that we can set _session username
@@ -77,14 +73,11 @@
 				if ( $data = $customerTableResults->fetch_object() ) {
 					$_SESSION['customer_username'] = $data->username;
 					header("Location: create_order.php?custId=$customerId");
-					//header("Location: home.php");
 				}
 			} else {
 				echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
 			}
 
-			//$message = "Hi ".$_SESSION['customer_username']." you have been registered!";
-			//header("Location: create_order.php?registrationSuccess=$message&custId=$customerId");
 		} else {
 			echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
 			exit();

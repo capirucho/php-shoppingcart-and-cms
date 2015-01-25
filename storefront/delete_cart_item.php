@@ -1,14 +1,13 @@
 <?php
 
+	// connect to db and application commonly used functions /////
 	require 'shoppingcart_config.php';
 	$userSessionId = session_id();
 
 
 	if ( isset($_GET['delete']))  {
 		$cartItemToDelete = $db->real_escape_string( $_GET['delete'] );
-		//$quantity = $db->real_escape_string( $_POST['quantity'] ); 
-		//echo $userSessionId;
-		$table_name = "cart";
+		$table_name = "shopcart_order_details";
 
 		$deleteFromCartQuery = "delete from ".$table_name." where product_id = ".$cartItemToDelete." and session_id ='".$userSessionId."';";
 

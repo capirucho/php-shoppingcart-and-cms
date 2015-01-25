@@ -3,28 +3,18 @@
 //get site header
 require 'header.php'; 
 
-// check if user has logged in /////
-  //if ( !isUserLoggedIn() ) {
-   // header("Location: store_login.php");
-  //}
-
 
   //tables to query
-  $products_table = "products";
+  $products_table = "shopcart_products";
 
   //the queries
   $queryTheProductsTable = "select * from ".$products_table." order by date_added desc limit 6;";
-  //$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join product_category on products.product_category_id = product_category.product_category_id ORDER BY product_category.category_name;";
-
-
 
   //the results from the queries
   $resultsForProductsTable = $db->query($queryTheProductsTable);  
 
   //place the $resultsForCategoriesTable into an array so result set can be used more than once
   $arrayResultsForProducts = $resultsForProductsTable->fetch_all(MYSQLI_ASSOC); 
-
-  //print_r($arrayResultsForProducts);
 
 
 
@@ -40,13 +30,8 @@ require 'header.php';
 
       <h1>Our Newest Tamales Offerings</h1>
       <?php 
-
-      //$PHPSESSID=session_id(); 
-      //echo $PHPSESSID;
-      
-      //print_r($arrayResultsForProducts);
-      if ( !empty($arrayResultsForProducts) ) {
-          echo "<div class=\"row\">";
+        if ( !empty($arrayResultsForProducts) ) {
+            echo "<div class=\"row\">";
       ?>
 
       <?php
@@ -57,21 +42,7 @@ require 'header.php';
       ?>
       <?php 
           echo "</div>";
-      } 
+        } //end if 
       ?>
-      <?php
-        //while ( $data = $resultsForProductsTable->fetch_object() ) { 
-
-          
-          //<div class="row">
-           // <div class="col-lg-4">
-
-          //print "<tr><td>$data->last_name</td><td>$data->first_name</td><td>$data->username</td><td>$data->email_address</td></tr>";
-        //}
-        //$resultsForProductsTable->free();
-        //$db->close();
-      ?>
-
-
 
 <?php require 'footer.php'; ?>

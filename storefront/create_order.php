@@ -1,13 +1,12 @@
 <?php
 
-	// connect to db /////
+	// connect to db and application commonly used function /////
 	require 'shoppingcart_config.php';
 	require 'shoppingcart_functions.php';
 
-	$cartTable = 'cart';
-	$productsTable = 'products';
-	$ordersTable = 'orders';
-	$orderDetailsTable = 'cart';
+	$cartTable = 'shopcart_order_details';
+	$productsTable = 'shopcart_products';
+	$ordersTable = 'shopcart_orders';
 	$currentUserSessionId = session_id();
 
 	if ( isset($_GET['custId']) ) {
@@ -17,8 +16,7 @@
 		left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' and 
 		".$cartTable.".checkout_status = 'incomplete' GROUP BY session_id;";	
 
-		echo "boing:".$cartItemsQuery;	
-
+		
 		//the results from the queries
 		$resultsForItemsInCart = $db->query($cartItemsQuery);
 
@@ -27,10 +25,8 @@
 		while ( $data = $resultsForItemsInCart->fetch_object() ) {
 
 			$item_total = $data->price * $data->quantity;
-			$item_total = $item_total;
+			$item_total = number_format($item_total, 2);
 			$cartSubTotal = $cartSubTotal + $item_total;
-
-			echo "<br><br>subtotal: ".number_format($cartSubTotal, 2)."<br><br>";
 
 		}
 
@@ -47,43 +43,43 @@
 				if ( $data = $queryOrdersTableResults->fetch_object() ) {
 					$officialOrderId = $data->order_id;
 					$orderSubTotal = $data->sub_total;
-					$tax = $data->tax;
+					$taxRate = $data->tax;
 					$deliveryCharge = $data->delivery_charge;
-
-					$total = $orderSubTotal + ($orderSubTotal * $tax);
+					$taxCharges = $orderSubTotal * $taxRate;
+					$total = $orderSubTotal + $taxCharges;
 					$total = $total + $deliveryCharge;
 
-					echo "the final total =".$total."<br><br>";
 
-					//set order status complete after user has "placed order"
-					//NOTE: may need to use timestamp on cart to uniquely identify shopping session after an order is place but user buys
+					//Set order status complete after user has "placed order"
+					//NOTE: may need to use timestamp on cart to uniquely identify shopping session after an order is placed but user buys
 					//more after placing original order ????? maybe ?????? or find a way to "destroy current session" after placing order (but
 					//without logging out user if logged in..sigh)
-					//$finalizeOrderQuery = "UPDATE ".$ordersTable." SET total = ".$total.", order_status = 'complete' WHERE order_id = ".$officialOrderId.";";
+
 					$finalizeOrderQuery = "UPDATE ".$ordersTable." SET total = ".$total." WHERE order_id = ".$officialOrderId.";";
 
-					$db->query($finalizeOrderQuery);
-
-					echo $finalizeOrderQuery;
+					
+					if ( $db->query($finalizeOrderQuery ) ) {
+						$updateOrderDetailQuery = "UPDATE ".$cartTable." SET order_id = ".$officialOrderId." WHERE session_id = '".$currentUserSessionId."';";
+						if ( $db->query($updateOrderDetailQuery) ) {
+							header("Location: checkout.php?orderId=$officialOrderId");
+						}
+					} else {
+					echo "<p>error for update order table: MySQL error no {$db->errno} : {$db->error}</p>";
+					}
 
 				} else {
-					echo "<p>Binggg:MySQL error no {$db->errno} : {$db->error}</p>";
+					echo "<p>Error if order table query empty. MySQL error no {$db->errno} : {$db->error}</p>";
 				}
 
 			} else {
-				echo "<p>Boo:MySQL error no {$db->errno} : {$db->error}</p>";
+				echo "<p>Error for order table query :MySQL error no {$db->errno} : {$db->error}</p>";
 			}
 
 
 		} else {
-			echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
+			echo "<p>Error for insert into order tables: MySQL error no {$db->errno} : {$db->error}</p>";
 			exit();
 		}
-
-		$updateOrderDetailQuery = "UPDATE ".$orderDetailsTable." SET order_id = ".$officialOrderId.", checkout_status = 'complete' WHERE session_id = ".$currentUserSessionId.";";
-
-		$db->query($updateOrderDetailQuery);
-
 		
 	}
 

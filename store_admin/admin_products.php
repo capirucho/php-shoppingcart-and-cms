@@ -3,7 +3,7 @@
 
 require 'header.php'; 
 
-// check if user has logged in /////
+	// check if user has logged in /////
 	if ( !isUserLoggedIn() ) {
 		header("Location: admin_login.php");
 	}
@@ -31,27 +31,21 @@ require 'header.php';
 	
 
 	//tables to query
-	$product_category_table = "product_category";
-	$products_table = "products";
+	$product_category_table = "shopcart_product_category";
+	$products_table = "shopcart_products";
 
 	//the queries
 	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
-	//$queryTheCategoryTableAgain = "select * from ".$product_category_table." order by category_name asc;";
-	//$queryTheProductsTable = "select * from ".$products_table." order by product_name asc;";
 	$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join product_category on products.product_category_id = product_category.product_category_id ORDER BY product_category.category_name;";
 
 
 
 	//the results from the queries
 	$resultsForCategoriesTable = $db->query($queryTheCategoryTable);
-	//$resultsForCategoriesTableAgain = $db->query($queryTheCategoryTableAgain);
 	$resultsForProductsTable = $db->query($queryTheProductsTable);	
 
 	//dump the $resultsForCategoriesTable into an array so result set can be used more than once
 	$finalResultsForCategories = $resultsForCategoriesTable->fetch_all(MYSQLI_ASSOC);	
-
-	//print_r($finalResultsForCategories);
-
 
 ?>
 
@@ -60,7 +54,6 @@ require 'header.php';
 		<h2>List Of Tamales Offered</h2>
 		<?php
 
-				//if ($resultsForCategoriesTable->num_rows >= 1) {
 				if ( !empty($finalResultsForCategories) ) {	
 					echo "<a href=# class=\"view_categories\" data-toggle=\"modal\" data-target=\"#addCategoryForm\">view/edit tamal(es) categories</a>";
 				}
@@ -71,8 +64,6 @@ require 'header.php';
 
 	<?php 
 
-
-		//if ($resultsForCategoriesTable->num_rows == 0) {
 		if ( empty($finalResultsForCategories) ) {
 			$needCatMsg = "Click here to add a category.";
 			echo "<div role=\"alert\" class=\"alert alert-warning\">Warning! You do not have any Tamales categories. You can not add Tamales products until you have added at least one category of Tamales. <a href=# class=\"alert-link\" data-toggle=\"modal\" data-target=\"#addCategoryForm\"><strong>".$needCatMsg."</strong></a></div>";
@@ -92,7 +83,6 @@ require 'header.php';
 
 			if ( $resultsForProductsTable->num_rows == 0 ) {
 				echo "<tr><td colspan=\"5\">0 Tamales products found. Please add Tamales.</td></tr>";
-				//exit();
 			}
 			while ( $data = $resultsForProductsTable->fetch_object() ) { 
 				echo "<tr><td>$data->category_name</td><td>$data->product_name</td><td>$data->product_image</td><td>$data->product_description</td><td>$data->price</td></tr>";
@@ -116,26 +106,17 @@ require 'header.php';
         
       	<?php 
 
-      		//if ( $resultsForCategoriesTable->num_rows >= 1 ) {
       		if ( !empty($finalResultsForCategories) ) {
       	?>		
 		      	<div class="panel panel-info panel-default">
 					  <div class="panel-heading">Categories of Tamales already offered:</div>
 					  <div class="panel-body">
 					  	<?php
-							//if ( !empty($finalResultsForCategories) ) {
 
 								foreach ($finalResultsForCategories as $key => $value) {
 								    echo "<span class=\"label label-default\">".$value['category_name']."</span> ";
 								}
 
-							//}
-
-					  		//echo "<ol class=\"current_cats clearfix\">";
-							//while ( $currentCategories = $resultsForCategoriesTable->fetch_object() ) { 
-							//	echo "<li>$currentCategories->category_name</li>";
-							//}
-							//echo "</ol>";
 						?>
 				  </div>
 				</div>
@@ -182,7 +163,6 @@ require 'header.php';
 				<div class="form-group">
 					<label for="category">Choose Tamales Category</label>
 					<select name="product_category_id" id="category" class="form-control">
-					    <!--<option selected="selected" value="" disabled="disabled">-- select tamales category</option>-->
 
 					    <?php 
 

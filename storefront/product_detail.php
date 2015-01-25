@@ -1,13 +1,6 @@
 <?php 
 
-
 require 'header.php'; 
-
-// check if user has logged in /////
-	//if ( !isUserLoggedIn() ) {
-		//header("Location: admin_login.php");
-	//}
-
 
 ?>
 
@@ -17,13 +10,11 @@ require 'header.php';
 		$productId = $db->real_escape_string( $_GET['product_id'] ); 
 		echo $productId;
 	//tables to query
-	$product_category_table = "product_category";
-	$products_table = "products";
+	$product_category_table = "shopcart_product_category";
+	$products_table = "shopcart_products";
 
 	//the queries
 	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
-	//$queryTheCategoryTableAgain = "select * from ".$product_category_table." order by category_name asc;";
-	//$queryTheProductsTable = "select * from ".$products_table." order by product_name asc;";
 	$queryTheProductsTable = "SELECT * FROM ".$products_table." WHERE product_id =".$productId.";";
 
 
@@ -36,13 +27,6 @@ require 'header.php';
 	$arrayResultsForProducts = $resultsForProducts->fetch_all(MYSQLI_ASSOC);
 	$arrayResultsForCategories = $resultsForCategories->fetch_all(MYSQLI_ASSOC);	
 		
-	//print_r($finalResultsForCategories);
-
-
-
-	//print_r($arrayResultsForProducts);
-
-
 	}
 
 	else {
@@ -67,12 +51,13 @@ require 'header.php';
 	          		<div class=\"col-md-8\"><p class=\"description\">".$value['product_description']."</p><p class=\"price\">$".$value['price']." per dozen (1 dozen = 12 tamales)</p><select name=\"quantity\"><option value=\"1\">1 dozen</option><option value=\"2\">2 dozen</option><option value=\"3\">3 dozen</option><option value=\"4\">4 dozen</option></select><button type=\"submit\" class=\"btn btn-success add-to-cart\">Add to cart</button></div>";
 	        }
 		?>
-      	<!--<input name="user_session_id" type="hidden" value="<?php// echo $USER_SESSID ?>"> -->
+      	<input name="prodname" type="hidden" value="<?php echo $value['product_name'] ?>">
+      	<input name="unitprice" type="hidden" value="<?php echo $value['price'] ?>">
       	<input name="pid" type="hidden" value="<?php echo $value['product_id'] ?>">
 
 		</form>	  
 
-	    <?php } ?>  
+	    <?php } //end if ?>  
 
 
 	</div>

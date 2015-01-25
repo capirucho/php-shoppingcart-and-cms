@@ -14,32 +14,18 @@
 <h3>Items in your cart:</h3>
 <?php
 	
-	//if (isset($_POST('continue_shopping'))) {
-	//	header("Location: home.php");
-	//}
-
-	//if (isset($_POST('checkout'))) {
-	//	header("Location: checkout.php");
-	//}
-
-
-
-	//if (isset($_GET['addedToCart'])) {
-	//	echo $_GET['addedToCart'];
-
-	//}	
-
 
 	//get current session id and make sure it matches with stored user session ID
 	$currentUserSessionId = session_id();
 
 	//table to query
-	$cartTable = "cart";
-	$productsTable = "products";
+	$cartTable = "shopcart_order_details";
+	$productsTable = "shopcart_products";
 
 
 	//the query
-	$cartItemsQuery = "select product_name, product_image, sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from ".$productsTable." left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' GROUP BY products.product_name;";
+	$cartItemsQuery = "select ".$cartTable.".product_name, product_image, sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from ".$productsTable." left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' GROUP BY ".$productsTable.".product_name;";
+
 
 
 	//the results from the queries
@@ -107,8 +93,6 @@
 	    <span class="amount"><?php echo "$".number_format($grand_total,2); ?></span><br>
 	    Shipping and Tax costs not included. These are added at checkout.<br><br>
 	    <form action="checkout.php" method="post">
-	      	<!--<input name="user_session_id" type="hidden" value="<?php echo $USER_SESSID ?>">-->
-	      	<!--<input name="pid" type="hidden" value="<?php echo $value['product_id'] ?>">-->
 	      	<?php if ( $grand_total > 0 ) { ?>
 	    	<button type="submit" class="btn btn-primary">Check out</button>
 	    	<?php } ?>
