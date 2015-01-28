@@ -15,7 +15,7 @@ require 'header.php';
 
 	//the queries
 	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
-	$queryTheProductsTable = "SELECT * FROM ".$products_table." WHERE product_id =".$productId.";";
+	$queryTheProductsTable = "select * from ".$products_table." where product_id =".$productId.";";
 
 
 

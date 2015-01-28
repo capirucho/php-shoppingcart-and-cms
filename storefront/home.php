@@ -20,12 +20,50 @@ require 'header.php';
 
 ?>
 
+      <?php 
+      
+      //$message = isset($_GET['message']) ? $_GET['message'] : "";
+      //$productName = isset($_GET['prodName']) ? $_GET['prodName'] : "";
 
+
+
+      if ( isset($_GET['message']) ) {
+        $message = $_GET['message'];
+      }
+      else {
+        $message = "";
+      }
+
+      if ( isset($_GET['prodName']) ) {
+        $productName = $_GET['prodName'];
+      }
+      else {
+        $productName = "";
+      }
+
+
+
+
+      if($message == 'added') {
+          echo "<div class='alert alert-success'>";
+              echo "<strong>{$productName}</strong> tamales were added to your cart!";
+          echo "</div>";
+      }
+       
+      if($message == 'exists') {
+          echo "<div class='alert alert-warning'>";
+              echo "<strong>{$productName}</strong> tamales are already in your cart!";
+          echo "</div>";
+      }
+
+
+            
+      ?>
       <!-- Jumbotron -->
       <div class="jumbotron">
         <h1>Come get some tamales!</h1>
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
-        <p><a role="button" href="#" class="btn btn-lg btn-success">Get started today</a></p>
+        <p><a role="button" href="#" class="btn btn-lg btn-success">Order some today!</a></p>
       </div>
 
       <h1>Our Newest Tamales Offerings</h1>

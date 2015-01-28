@@ -42,7 +42,7 @@ create_order.php
 
 -->
 
-<?php if (!isset($_SESSION['customer_username'])) { ?>
+<?php if ( !isset($_SESSION['customer_username'] ) ) { ?>
 <div class="panel panel-default">
   <div class="panel-heading step1header">
     <h3 class="panel-title">Account Details</h3>
@@ -237,12 +237,20 @@ create_order.php
 
 <?php } ?>
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Place order</h3>
-  </div>
-	<?php if(isset($_GET['orderId'] ) ) { $orderId = $_GET['orderId']; ?>
-		<div id="step3" class="panel-body place-order">
-		<?php
+	<div class="panel-heading">
+		<h3 class="panel-title">Place order</h3>
+	</div>
+	<?php 
+		if ( isset( $_GET['orderId'] ) || isset($_SESSION['sessionOrderID'] ) )  { 
+			if ( isset($_GET['orderId'] ) ) {
+				$orderId = $_GET['orderId']; 
+			} 
+			else {
+				$orderId = $_SESSION['sessionOrderID'];
+			}
+	?>
+	<div id="step3" class="panel-body place-order">
+	<?php
 
 		//tables to query
 		$ordersTable = "shopcart_orders";
@@ -252,70 +260,68 @@ create_order.php
 
 		//the queries: get products ordered from order details table, get totals
 		$orderItemsQuery = "select product_name, sum(quantity) as quantity, unit_price from ".$orderDetailsTable." where order_id = ".$orderId." GROUP BY product_name;";
-		$orderTotalsQuery = "select sub_total, tax, delivery_charge, total from ".$ordersTable." where order_id =".$orderId.";";
+		$orderTotalsQuery = "select order_id, sub_total, tax, delivery_charge, total from ".$ordersTable." where order_id =".$orderId.";";
 
 		//the results from the queries
 		$resultsForOrderItemsQuery = $db->query($orderItemsQuery);
 		$resultsForOrderTotalsQuery = $db->query($orderTotalsQuery);
 
-		?>
+	?>
 
-		order id passed = <?php echo $orderId ?><br><br>
+	order id passed = <?php echo $orderId ?><br><br>
 
 
-		<?php while ( $dataForOrderItems = $resultsForOrderItemsQuery->fetch_object() ) { ?>
+	<?php while ( $dataForOrderItems = $resultsForOrderItemsQuery->fetch_object() ) { ?>
 
-				<div class="row cart-item clearfix">
-					<div class="col-md-6">
-						<h3><?php echo $dataForOrderItems->product_name; ?></h3>
-						price per dozen: <?php echo $dataForOrderItems->unit_price; ?><br>
-						Current amount: <strong><?php echo $dataForOrderItems->quantity; ?> dozen</strong>
-					</div>
-					<div class="col-md-6 item-total pull-left">
-						<?php 
-							$item_total = $dataForOrderItems->unit_price * $dataForOrderItems->quantity;
-							$item_total = number_format($item_total, 2);
-							echo "$".$item_total;
-						?>					
-					</div>
-				</div>
-
-		<?php } //end while loop ?>
-			<div class="row total">
-				<div class="panel panel-info">
-				  <div class="panel-heading">
-				    <h3 class="panel-title">Today's Charges: </h3>
-				  </div>
-					<div class="panel-body">
-						<?php 
-							if ( $dataForOrderTotals = $resultsForOrderTotalsQuery->fetch_object() ) { 
-							$orderSubTotal = $dataForOrderTotals->sub_total;
-							$deliveryCharge = $dataForOrderTotals->delivery_charge;
-							$taxRate = $dataForOrderTotals->tax;
-							$total = $dataForOrderTotals->total;
-							$taxCharges = $orderSubTotal * $taxRate;
-						?>
-						
-					    Subtotal: <span class="amount"><?php echo "$".number_format($orderSubTotal, 2); ?></span><br>
-					    Taxes: <span class="amount"><?php echo $taxCharges; ?></span><br>
-					    Delivery charge: <span class="amount"><?php echo "$".number_format($deliveryCharge, 2); ?></span><br>		    
-					    Today's Grand Total: <span class="amount"><?php echo "$".number_format($total, 2); ?></span><br><br><br>
-					    <form action="place_order.php" method="post">
-					      	<?php if ( $total > 0 ) { ?>
-					    	<button type="submit" class="btn btn-success">Place Order</button>
-					    	<?php } ?>
-					    </form>
-					    <?php } //end if ?>
-					</div>
-				</div>		
+		<div class="row cart-item clearfix">
+			<div class="col-md-6">
+				<h3><?php echo $dataForOrderItems->product_name; ?></h3>
+				price per dozen: <?php echo $dataForOrderItems->unit_price; ?><br>
+				Current amount: <strong><?php echo $dataForOrderItems->quantity; ?> dozen</strong>
 			</div>
-		</div>		
-		
-
-
+			<div class="col-md-6 item-total pull-left">
+				<?php 
+					$item_total = $dataForOrderItems->unit_price * $dataForOrderItems->quantity;
+					$item_total = number_format($item_total, 2);
+					echo "$".$item_total;
+				?>					
+			</div>
 		</div>
-	<?php } ?>
+
+	<?php } //end while loop ?>
+		<div class="row total">
+			<div class="panel panel-info">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Today's Charges: </h3>
+			  </div>
+				<div class="panel-body">
+					<?php 
+						if ( $dataForOrderTotals = $resultsForOrderTotalsQuery->fetch_object() ) { 
+						$orderSubTotal = $dataForOrderTotals->sub_total;
+						$deliveryCharge = $dataForOrderTotals->delivery_charge;
+						$officialOrderId = $dataForOrderTotals->order_id;
+						$taxRate = $dataForOrderTotals->tax;
+						$total = $dataForOrderTotals->total;
+						$taxCharges = $orderSubTotal * $taxRate;
+					?>
+					
+				    Subtotal: <span class="amount"><?php echo "$".number_format($orderSubTotal, 2); ?></span><br>
+				    Taxes: <span class="amount"><?php echo "$".$taxCharges; ?></span><br>
+				    Delivery charge: <span class="amount"><?php echo "$".number_format($deliveryCharge, 2); ?></span><br>		    
+				    Total: <span class="amount"><?php echo "$".number_format($total, 2); ?></span><br><br><br>
+				    <form action="complete_order.php" method="post">
+				      	<?php if ( $total > 0 ) { ?>
+				      	<input name="orderId" type="hidden" value="<?php echo $officialOrderId ?>">
+				    	<button type="submit" class="btn btn-success">Place Order</button>
+				    	<?php } ?>
+				    </form>
+				    <?php } //end if ?>
+				</div>
+			</div>		
+		</div>
+	</div>		
 </div>
+<?php } ?>
 
 
 

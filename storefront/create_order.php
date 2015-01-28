@@ -12,11 +12,15 @@
 	if ( isset($_GET['custId']) ) {
 		$customerId = $_GET['custId'];
 
-		$cartItemsQuery = "select sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from ".$productsTable." 
-		left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' and 
-		".$cartTable.".checkout_status = 'incomplete' GROUP BY session_id;";	
+		//$cartItemsQuery = "select sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from ".$productsTable." 
+		//left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' and 
+		//".$cartTable.".checkout_status = 'incomplete' GROUP BY session_id;";
 
-		
+
+		$cartItemsQuery = "select quantity, unit_price, session_id, product_id from ".$cartTable." where session_id = '".$currentUserSessionId."' and checkout_status = 'incomplete';";			
+
+		echo $cartItemsQuery."<br><br>";
+
 		//the results from the queries
 		$resultsForItemsInCart = $db->query($cartItemsQuery);
 
@@ -24,9 +28,13 @@
 
 		while ( $data = $resultsForItemsInCart->fetch_object() ) {
 
-			$item_total = $data->price * $data->quantity;
+			$item_total = $data->unit_price * $data->quantity;
 			$item_total = number_format($item_total, 2);
 			$cartSubTotal = $cartSubTotal + $item_total;
+			
+			echo "item total: ".$item_total."<br>";
+
+			echo "items cart subtotal before insert to orders table: ".$cartSubTotal."<br>";
 
 		}
 
@@ -37,6 +45,7 @@
 
 		if ($db->query($createOrderQuery) ) {
 			$orderId = $db->insert_id;
+			$_SESSION['sessionOrderID'] = $orderId;
 
 			$queryOrdersTable = "select order_id, sub_total, tax, delivery_charge from ".$ordersTable." where order_id =".$orderId.";";
 			if ($queryOrdersTableResults = $db->query($queryOrdersTable) ) {
@@ -49,6 +58,7 @@
 					$total = $orderSubTotal + $taxCharges;
 					$total = $total + $deliveryCharge;
 
+					echo "subtotal after inserted into orders table: ".$orderSubTotal."<br>";	
 
 					//Set order status complete after user has "placed order"
 					//NOTE: may need to use timestamp on cart to uniquely identify shopping session after an order is placed but user buys
@@ -57,7 +67,8 @@
 
 					$finalizeOrderQuery = "UPDATE ".$ordersTable." SET total = ".$total." WHERE order_id = ".$officialOrderId.";";
 
-					
+					echo "order total after order table update: ".$total;
+					//exit();
 					if ( $db->query($finalizeOrderQuery ) ) {
 						$updateOrderDetailQuery = "UPDATE ".$cartTable." SET order_id = ".$officialOrderId." WHERE session_id = '".$currentUserSessionId."';";
 						if ( $db->query($updateOrderDetailQuery) ) {

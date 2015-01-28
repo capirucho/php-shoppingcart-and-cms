@@ -55,9 +55,9 @@ require 'shoppingcart_functions.php';
 		            <li>
 		            	<?php 
 		            		if ( isUserLoggedIn() ) {
-							//welcome user by name and show logout option
-							echo "Hi ".$_SESSION['customer_username'];
-							echo " | <a href=\"customer_logout.php\">logout</a>";
+								//welcome user by name and show logout option
+								echo "Hi ".$_SESSION['customer_username'];
+								echo " | <a href=\"customer_logout.php\">logout</a>";
 							}
 							else {
 								echo "<a href=\"customer_login.php\">Sign in</a>";
@@ -66,7 +66,20 @@ require 'shoppingcart_functions.php';
 		            	
 
 		            </li>
-		            <li><a href=#>Cart: <?php //echo $_SESSION["numOfItemsInCart"]; ?></a></li>
+		            <li>
+		            	<a href="show_cart.php">
+		            		<?php
+		            			if ( !isset($_SESSION['cart_items']) ) {
+		            				$numItemsInCart = 0;
+		            			}
+		            			else {
+                        			// count products in cart
+                        			$numItemsInCart = count($_SESSION['cart_items']);
+                        		}
+                        	?>
+                        	Cart <span class="badge" id="comparison-count"><?php echo $numItemsInCart; ?></span>
+                    	</a>
+                	</li>
 		          </ul>
 		        </div><!--/.nav-collapse -->
 		      </div>

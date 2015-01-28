@@ -24,7 +24,9 @@
 
 
 	//the query
-	$cartItemsQuery = "select ".$cartTable.".product_name, product_image, sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from ".$productsTable." left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' GROUP BY ".$productsTable.".product_name;";
+	$cartItemsQuery = "select ".$cartTable.".product_name, product_image, sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from "
+	.$productsTable." left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '"
+	.$currentUserSessionId."' and checkout_status = 'incomplete' GROUP BY ".$productsTable.".product_name;";
 
 
 
@@ -58,7 +60,7 @@
 ?>
 
 
-<?php $grand_total = 0 ?>
+<?php $sub_total = 0 ?>
 
 <?php while ( $data = $resultsForItemsInCart->fetch_object() ) { ?>
 
@@ -73,13 +75,13 @@
 				<?php 
 					$item_total = $data->price * $data->quantity;
 					$item_total = number_format($item_total, 2);
-					$grand_total = $grand_total + $item_total;
+					$sub_total = $sub_total + $item_total;
 
 					echo "$".$item_total;
 				?>					
 			</div>
 			<div class="col-md-6 item-total pull-left">
-				<?php echo "<a href=\"delete_cart_item.php?delete=".$data->product_id."\">delete this item</a>"; ?>	
+				<?php echo "<a href=\"delete_cart_item.php?removeItem=".$data->product_id."\">delete this item</a>"; ?>	
 			</div>
 		</div>
 
@@ -90,10 +92,10 @@
 	    <h3 class="panel-title">Subtotal</h3>
 	  </div>
 	  <div class="panel-body">
-	    <span class="amount"><?php echo "$".number_format($grand_total,2); ?></span><br>
+	    <span class="amount"><?php echo "$".number_format($sub_total,2); ?></span><br>
 	    Shipping and Tax costs not included. These are added at checkout.<br><br>
 	    <form action="checkout.php" method="post">
-	      	<?php if ( $grand_total > 0 ) { ?>
+	      	<?php if ( $sub_total > 0 ) { ?>
 	    	<button type="submit" class="btn btn-primary">Check out</button>
 	    	<?php } ?>
 	    <form>
