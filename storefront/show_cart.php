@@ -94,11 +94,24 @@
 	  <div class="panel-body">
 	    <span class="amount"><?php echo "$".number_format($sub_total,2); ?></span><br>
 	    Shipping and Tax costs not included. These are added at checkout.<br><br>
-	    <form action="checkout.php" method="post">
-	      	<?php if ( $sub_total > 0 ) { ?>
-	    	<button type="submit" class="btn btn-primary">Check out</button>
-	    	<?php } ?>
-	    <form>
+	    <?php if ( !isset($_SESSION['customerId']) ) { ?>
+	    	
+		    <form action="checkout.php" method="post">
+		      	<?php if ( $sub_total > 0 ) { ?>
+		    	<button type="submit" class="btn btn-primary">Check out</button>
+		    	<?php } ?>
+		    <form>
+
+		<?php } else { $custId = $_SESSION['customerId']; ?>
+			
+		    <form action="create_order.php" method="get">
+		      	<?php if ( $sub_total > 0 ) { ?>
+		      	<input type="hidden" value="<?php echo $custId ?>">
+		    	<button type="submit" class="btn btn-primary">Check out</button>
+		    	<?php } ?>
+		    <form>
+
+		<?php } ?>
 	  </div>
 	</div>
 

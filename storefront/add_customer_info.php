@@ -9,7 +9,7 @@
 
 
 	// user defined variables /////
-	$customerTable = "shopcart_admin_customer";
+	$customerTable = "shopcart_customer";
 
 	function check_input ( $form_array ) {
 
@@ -68,10 +68,12 @@
 			$customerId = $db->insert_id;
 
 			//query customer table to get customer username so that we can set _session username
-			$queryCustomerTable = "select username from ".$customerTable." where customer_id = ".$customerId.";";
+			//Also set customerId in the session in case logged-in user continues shopping after placing an order
+			$queryCustomerTable = "select customer_id, username from ".$customerTable." where customer_id = ".$customerId.";";
 			if ($customerTableResults = $db->query($queryCustomerTable)) {
 				if ( $data = $customerTableResults->fetch_object() ) {
 					$_SESSION['customer_username'] = $data->username;
+					$_SESSION['customerId'] = $data->customer_id;
 					header("Location: create_order.php?custId=$customerId");
 				}
 			} else {

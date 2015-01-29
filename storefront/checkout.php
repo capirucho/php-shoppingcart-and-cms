@@ -306,7 +306,7 @@ create_order.php
 					?>
 					
 				    Subtotal: <span class="amount"><?php echo "$".number_format($orderSubTotal, 2); ?></span><br>
-				    Taxes: <span class="amount"><?php echo "$".$taxCharges; ?></span><br>
+				    Taxes: <span class="amount"><?php echo "$".number_format($taxCharges, 2); ?></span><br>
 				    Delivery charge: <span class="amount"><?php echo "$".number_format($deliveryCharge, 2); ?></span><br>		    
 				    Total: <span class="amount"><?php echo "$".number_format($total, 2); ?></span><br><br><br>
 				    <form action="complete_order.php" method="post">

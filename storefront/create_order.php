@@ -9,8 +9,16 @@
 	$ordersTable = 'shopcart_orders';
 	$currentUserSessionId = session_id();
 
-	if ( isset($_GET['custId']) ) {
-		$customerId = $_GET['custId'];
+	if ( isset($_GET['custId']) || isset($_SESSION['customerId']) ) {
+
+		if ( isset($_GET['custId']) ) {
+			$customerId = $_GET['custId'];
+		} 
+
+		if ( isset($_SESSION['customerId']) ) {
+			$customerId = $_SESSION['customerId'];
+		}
+		
 
 		//$cartItemsQuery = "select sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from ".$productsTable." 
 		//left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '".$currentUserSessionId."' and 

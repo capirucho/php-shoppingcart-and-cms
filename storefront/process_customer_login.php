@@ -38,6 +38,7 @@ if ( check_input( $_POST ) ) {
 		if ( $data = $theQueryResult->fetch_object() ) {
 			$customerId = $data->customer_id;
 			$_SESSION['customer_username'] = $data->username;
+			$_SESSION['customerId'] = $data->customer_id;
 			if ( $placeOrder == true ) {
 				header("Location: create_order.php?custId=$customerId");		
 			}
