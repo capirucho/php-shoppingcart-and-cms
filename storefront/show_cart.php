@@ -9,9 +9,14 @@
 
 	}
 
+
+	if ( isset($_GET['message'] ) ) {
+		$qtyUpdateSuccess = $_GET['message'];
+	}	
+
 ?>
 
-<h3>Items in your cart:</h3>
+<h2>Items in your cart:</h2>
 <?php
 	
 
@@ -34,31 +39,34 @@
 	$resultsForItemsInCart = $db->query($cartItemsQuery);
 
 	
-	
-	
-	/* TODO: show num items in cart
-
-	$numOfItemsInCart = $resultsForItemsInCart->num_rows;
-	echo "the number".$numOfItemsInCart;
-
-	//declare session var for numOfItemsInCart
-	if ( isset($_SESSION["numOfItemsInCart"] ) ) {
-		//$_SESSION["numOfItemsInCart"] = $numOfItemsInCart + 1;
-	}
-	else {
-		$_SESSION["numOfItemsInCart"] = 0;
-	}
-
-	echo "num items in cart:".$numOfItemsInCart;
-
-
-	if (!$resultsForItemsInCart) {
-		echo "there was an error in query: $cartItemsQuery";
-		echo $db->error;
-	}
-	*/
 ?>
 
+<?php
+
+
+
+
+      if ( isset($_GET['message']) ) {
+        $message = $_GET['message'];
+      }
+      else {
+        $message = "";
+      }
+
+      if ( isset($_GET['msgTxt']) ) {
+        $msgTxt = $_GET['msgTxt'];
+      }
+      else {
+        $productName = "";
+      }
+
+      if( $message == 'updated' ) {
+          echo "<div class='alert alert-success'>";
+              echo "<strong>{$msgTxt}</strong>";
+          echo "</div>";
+      }
+
+?>
 
 <?php $sub_total = 0 ?>
 
@@ -71,7 +79,27 @@
 				price per dozen: <?php echo $data->price; ?><br>
 				Current amount: <strong><?php echo $data->quantity; ?> dozen</strong>
 			</div>
+
+			<div class="col-md-4 item-total pull-left">
+				<form action="update_cart.php" method="post">
+					<label>update quantity: </label>
+					<select name="qty">
+						<option value="1">1 dozen</option>
+						<option value="2">2 dozen</option>
+						<option value="3">3 dozen</option>
+						<option value="4">4 dozen</option>
+						<option value="5">5 dozen</option>
+						<option value="6">6 dozen</option>
+					</select>
+					<input name="prodId" type="hidden" value="<?php echo $data->product_id; ?>">
+					<button type="submit" class="btn btn-warning btn-xs">update</button>
+				</form>				
+			</div>
 			<div class="col-md-2 item-total pull-left">
+				<?php echo "<a href=\"delete_cart_item.php?removeItem=".$data->product_id."\">delete this item</a>"; ?>	
+			</div>
+
+			<div class="col-md-2 item-total pull-right">
 				<?php 
 					$item_total = $data->price * $data->quantity;
 					$item_total = number_format($item_total, 2);
@@ -80,9 +108,7 @@
 					echo "$".$item_total;
 				?>					
 			</div>
-			<div class="col-md-6 item-total pull-left">
-				<?php echo "<a href=\"delete_cart_item.php?removeItem=".$data->product_id."\">delete this item</a>"; ?>	
-			</div>
+
 		</div>
 
 <?php } //end while loop ?>
@@ -98,7 +124,7 @@
 	    	
 		    <form action="checkout.php" method="post">
 		      	<?php if ( $sub_total > 0 ) { ?>
-		    	<button type="submit" class="btn btn-primary">Check out</button>
+		    	<button type="submit" class="btn btn-success">Check out</button>
 		    	<?php } ?>
 		    <form>
 
@@ -107,7 +133,7 @@
 		    <form action="create_order.php" method="get">
 		      	<?php if ( $sub_total > 0 ) { ?>
 		      	<input type="hidden" value="<?php echo $custId ?>">
-		    	<button type="submit" class="btn btn-primary">Check out</button>
+		    	<button type="submit" class="btn btn-success">Check out</button>
 		    	<?php } ?>
 		    <form>
 

@@ -279,7 +279,7 @@ create_order.php
 				price per dozen: <?php echo $dataForOrderItems->unit_price; ?><br>
 				Current amount: <strong><?php echo $dataForOrderItems->quantity; ?> dozen</strong>
 			</div>
-			<div class="col-md-6 item-total pull-left">
+			<div class="col-md-6 checkout item-total pull-left">
 				<?php 
 					$item_total = $dataForOrderItems->unit_price * $dataForOrderItems->quantity;
 					$item_total = number_format($item_total, 2);

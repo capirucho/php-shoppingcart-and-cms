@@ -49,6 +49,10 @@ th, td {
 }
 
 
+h3.prod-title {
+	text-transform: capitalize;
+}
+
 .prod_img {
 	max-width: 85%;
 }
@@ -119,9 +123,17 @@ section#product-detail .add-to-cart {
 }
 
 .item-total {
-	text-align: right;
+	text-align: left;
 	font-size: 18px;
 	font-weight: bold;	
+}
+
+.checkout.item-total {
+	text-align: right;	
+}
+
+.update-qty {
+	width: 100px;
 }
 
 .total {
@@ -143,6 +155,10 @@ section#product-detail .add-to-cart {
 
 .place-order .cart-item {
 	padding-bottom: 15px;
+}
+
+.logout {
+	display: inline-block !important;
 }
 
 /*

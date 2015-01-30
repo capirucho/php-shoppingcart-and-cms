@@ -42,7 +42,11 @@ require 'header.php';
       }
 
 
-
+      if($message == 'complete') {
+          echo "<div class='alert alert-success'>";
+              echo "<strong>Your order of delicious Tamales has been successfully placed. We appreciate your business!</strong>!";
+          echo "</div>";
+      }
 
       if($message == 'added') {
           echo "<div class='alert alert-success'>";
@@ -74,7 +78,7 @@ require 'header.php';
 
       <?php
             foreach ($arrayResultsForProducts as $key => $value) {
-                echo "<div class=\"col-sm-4\"><h3>".$value['product_name']."</h3><img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\"><p>
+                echo "<div class=\"col-sm-4\"><h3 class=\"prod-title\">".$value['product_name']."</h3><img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\"><p>
                 <a role=\"button\" href=\"product_detail.php?product_id=".$value['product_id']."\" class=\"btn btn-success view-details\">View details »</a></p></div>";
             }
       ?>

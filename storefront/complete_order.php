@@ -27,7 +27,7 @@
 
 							session_regenerate_id();
 							//session_regenerate_id(true);
-							header ("Location: home.php");
+							header ("Location: home.php?message=complete");
 						}
 
 		}

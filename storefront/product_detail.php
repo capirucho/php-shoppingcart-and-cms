@@ -47,8 +47,24 @@ require 'header.php';
 
       	<?php
 	      	foreach ($arrayResultsForProducts as $key => $value) {
-	          echo "<div class=\"row\"><div class=\"col-md-4\"><h3 class=\"product-name\">".$value['product_name']."</h3><img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\"></div>
-	          		<div class=\"col-md-8\"><p class=\"description\">".$value['product_description']."</p><p class=\"price\">$".$value['price']." per dozen (1 dozen = 12 tamales)</p><select name=\"quantity\"><option value=\"1\">1 dozen</option><option value=\"2\">2 dozen</option><option value=\"3\">3 dozen</option><option value=\"4\">4 dozen</option></select><button type=\"submit\" class=\"btn btn-success add-to-cart\">Add to cart</button></div>";
+	          echo "<div class=\"row\">";
+	          	echo "<div class=\"col-md-4\">";
+	          		echo "<h3 class=\"product-name\">".$value['product_name']."</h3>";
+	          		echo "<img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\">";
+	          	echo "</div>";
+	          	echo "<div class=\"col-md-8\">";
+	          		echo "<p class=\"description\">".$value['product_description']."</p>";
+	          		echo "<p class=\"price\">$".$value['price']." per dozen (1 dozen = 12 tamales)</p>";
+	          		echo "<select name=\"quantity\">";
+	          			echo "<option value=\"1\">1 dozen</option>";
+	          			echo "<option value=\"2\">2 dozen</option>";
+	          			echo "<option value=\"3\">3 dozen</option>";
+	          			echo "<option value=\"4\">4 dozen</option>";
+	          			echo "<option value=\"5\">5 dozen</option>";
+	          			echo "<option value=\"6\">6 dozen</option>";
+	          		echo "</select>";
+	          		echo "<button type=\"submit\" class=\"btn btn-success add-to-cart\">Add to cart</button>";
+	          echo "</div>";
 	        }
 		?>
       	<input name="prodname" type="hidden" value="<?php echo $value['product_name'] ?>">

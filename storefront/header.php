@@ -57,7 +57,7 @@ require 'shoppingcart_functions.php';
 		            		if ( isUserLoggedIn() ) {
 								//welcome user by name and show logout option
 								echo "Hi ".$_SESSION['customer_username'];
-								echo " | <a href=\"customer_logout.php\">logout</a>";
+								echo " | <a class=\"logout\" href=\"customer_logout.php\">logout</a>";
 							}
 							else {
 								echo "<a href=\"customer_login.php\">Sign in</a>";
