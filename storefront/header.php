@@ -49,15 +49,16 @@ require 'shoppingcart_functions.php';
 		        <div class="navbar-collapse collapse" id="navbar">
 		          <ul class="nav navbar-nav">
 		            <li><a href="#about">Buy Tamales!</a></li>
-		            <li><a href="#contact">Contact</a></li>
 		          </ul>
 		          <ul class="nav navbar-nav navbar-right">
 		            <li>
 		            	<?php 
 		            		if ( isUserLoggedIn() ) {
 								//welcome user by name and show logout option
-								echo "Hi ".$_SESSION['customer_username'];
-								echo " | <a class=\"logout\" href=\"customer_logout.php\">logout</a>";
+								echo "<div class=\"greeting\">";
+									echo "<span>Hi ".$_SESSION['customer_username']."</span> ";
+									echo "(<a class=\"logout\" href=\"customer_logout.php\">logout</a>)";
+								echo "</div>";
 							}
 							else {
 								echo "<a href=\"customer_login.php\">Sign in</a>";

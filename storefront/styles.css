@@ -30,6 +30,16 @@ th, td {
 	margin-top: 75px;
 }
 
+.greeting {
+	padding: 15px;
+}
+
+a.logout {
+	 display: inline-block !important;
+	 padding: 0 !important;
+}
+
+
 .footer {
 	margin: 50px 0 25px 0;
 	text-align: center;
@@ -48,6 +58,19 @@ th, td {
 	color: red;
 }
 
+.sortby button {
+	display: inline-block;
+}
+
+#choose-cat {
+	text-transform: capitalize;
+	width: 150px;
+}
+
+button.go {
+	margin: 3px 0 0 5px;
+	text-transform: uppercase;
+}
 
 h3.prod-title {
 	text-transform: capitalize;
@@ -111,6 +134,7 @@ section#product-detail .add-to-cart {
 .cart-item {
 	margin: 10px 0 0 0;
 	border-bottom: 1px solid gray;
+	padding: 0 0 15px 0;
 }
 
 .cart-item h3 {
@@ -133,7 +157,22 @@ section#product-detail .add-to-cart {
 }
 
 .update-qty {
-	width: 100px;
+	/* width: 100px;*/
+	text-align: left;
+	font-size: 18px;
+	font-weight: bold;	
+}
+
+.delete-item {
+	text-align: left;
+	font-size: 18px;
+	font-weight: bold;	
+}
+
+.item-subtotal {
+	text-align: right;
+	font-size: 18px;
+	font-weight: bold;	
 }
 
 .total {
@@ -157,9 +196,7 @@ section#product-detail .add-to-cart {
 	padding-bottom: 15px;
 }
 
-.logout {
-	display: inline-block !important;
-}
+
 
 /*
 section#employees .add_employee {

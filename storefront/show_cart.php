@@ -80,7 +80,7 @@
 				Current amount: <strong><?php echo $data->quantity; ?> dozen</strong>
 			</div>
 
-			<div class="col-md-4 item-total pull-left">
+			<div class="col-md-4 update-qty pull-left">
 				<form action="update_cart.php" method="post">
 					<label>update quantity: </label>
 					<select name="qty">
@@ -95,11 +95,11 @@
 					<button type="submit" class="btn btn-warning btn-xs">update</button>
 				</form>				
 			</div>
-			<div class="col-md-2 item-total pull-left">
+			<div class="col-md-2 delete-item pull-left">
 				<?php echo "<a href=\"delete_cart_item.php?removeItem=".$data->product_id."\">delete this item</a>"; ?>	
 			</div>
 
-			<div class="col-md-2 item-total pull-right">
+			<div class="col-md-2 item-subtotal  pull-right">
 				<?php 
 					$item_total = $data->price * $data->quantity;
 					$item_total = number_format($item_total, 2);

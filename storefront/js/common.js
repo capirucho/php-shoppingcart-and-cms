@@ -12,5 +12,23 @@ $(document).ready(function() {
     	$("#step2").toggleClass("hidden");
         $("#step1").addClass("hidden");
 
-    });		    	    
+    });	
+
+
+    $('#choose-cat').change(function(){
+        $.ajax({
+
+            type: "GET",
+            url: "product_categories.php",
+            data: 'catId=' + $('.category').val()
+            //success: function(){
+               // window.location.href = "product_categories.php"
+           // }
+
+        }); // Ajax Call
+    }); //event handler
+
+
+
+
 });

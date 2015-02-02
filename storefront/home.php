@@ -6,12 +6,15 @@ require 'header.php';
 
   //tables to query
   $products_table = "shopcart_products";
+  $category_table = "shopcart_product_category";
 
   //the queries
   $queryTheProductsTable = "select * from ".$products_table." order by date_added desc limit 6;";
+  $queryCategoryTable = "select * from ".$category_table." order by category_name asc;";
 
   //the results from the queries
-  $resultsForProductsTable = $db->query($queryTheProductsTable);  
+  $resultsForProductsTable = $db->query($queryTheProductsTable); 
+  $resultsForCategoryTable = $db->query($queryCategoryTable); 
 
   //place the $resultsForCategoriesTable into an array so result set can be used more than once
   $arrayResultsForProducts = $resultsForProductsTable->fetch_all(MYSQLI_ASSOC); 
@@ -69,8 +72,27 @@ require 'header.php';
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
         <p><a role="button" href="#" class="btn btn-lg btn-success">Order some today!</a></p>
       </div>
-
-      <h1>Our Newest Tamales Offerings</h1>
+      <div class="row">
+        <div class="col-sm-8">
+          <h1>Our Newest Tamales Offerings</h1>
+        </div>
+        <div class="col-sm-4">
+          <form class="form-horizontal sortby" method="get" action="product_categories.php">
+            <div class="form-group">
+              <label for="choose-cat" class="col-sm-4 control-label">Sort by:&nbsp;</label>
+              <select name="catId" id="choose-cat" class="form-control col-sm-8">
+                <option selected disabled> -- select one -- </option>
+                <?php while ( $data = $resultsForCategoryTable->fetch_object() ) { ?>
+                <option class="category" value="<?php echo $data->product_category_id; ?>"><?php echo $data->category_name; ?></option>               
+                <?php } //end while loop ?>
+              </select>
+              <button class="btn btn-success btn-sm go">go</button>
+          </div>
+            
+          </form>
+          
+        </div>
+      </div>
       <?php 
         if ( !empty($arrayResultsForProducts) ) {
             echo "<div class=\"row\">";
