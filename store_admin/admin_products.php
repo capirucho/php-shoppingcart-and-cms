@@ -36,7 +36,8 @@ require 'header.php';
 
 	//the queries
 	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
-	$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." left outer join product_category on products.product_category_id = product_category.product_category_id ORDER BY product_category.category_name;";
+	$queryTheProductsTable = "SELECT category_name, product_name, product_image, product_description, price FROM ".$products_table." 
+	left outer join ".$product_category_table." on ".$products_table.".product_category_id = ".$product_category_table.".product_category_id ORDER BY ".$product_category_table.".category_name;";
 
 
 
@@ -85,7 +86,7 @@ require 'header.php';
 				echo "<tr><td colspan=\"5\">0 Tamales products found. Please add Tamales.</td></tr>";
 			}
 			while ( $data = $resultsForProductsTable->fetch_object() ) { 
-				echo "<tr><td>$data->category_name</td><td>$data->product_name</td><td>$data->product_image</td><td>$data->product_description</td><td>$data->price</td></tr>";
+				echo "<tr><td>$data->category_name</td><td>$data->product_name</td><td class=\"prod-image\">$data->product_image</td><td>$data->product_description</td><td>$data->price</td></tr>";
 				
 			}
 

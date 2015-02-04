@@ -81,7 +81,7 @@ require 'header.php';
             <div class="form-group">
               <label for="choose-cat" class="col-sm-4 control-label">Sort by:&nbsp;</label>
               <select name="catId" id="choose-cat" class="form-control col-sm-8">
-                <option selected disabled> -- select one -- </option>
+                <option selected value="-1"> -- select category -- </option>
                 <?php while ( $data = $resultsForCategoryTable->fetch_object() ) { ?>
                 <option class="category" value="<?php echo $data->product_category_id; ?>"><?php echo $data->category_name; ?></option>               
                 <?php } //end while loop ?>

@@ -75,6 +75,15 @@ section#products .add_products {
 	margin: 20px 0 10px 0;
 }
 
+
+#product_list {
+	table-layout: fixed;
+}
+
+.prod-image {
+	word-wrap: break-word;
+}
+
 #addCategoryForm ol.current_cats  {
 	padding: 0;
 }

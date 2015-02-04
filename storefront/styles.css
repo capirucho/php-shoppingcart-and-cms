@@ -58,13 +58,17 @@ a.logout {
 	color: red;
 }
 
+form.sortby {
+	margin: 15px 0 0 0;
+}
+
 .sortby button {
 	display: inline-block;
 }
 
 #choose-cat {
 	text-transform: capitalize;
-	width: 150px;
+	width: 175px;
 }
 
 button.go {
@@ -196,7 +200,11 @@ section#product-detail .add-to-cart {
 	padding-bottom: 15px;
 }
 
+/* categories page */
 
+h1.cat-name {
+	text-transform: capitalize;
+}
 
 /*
 section#employees .add_employee {
