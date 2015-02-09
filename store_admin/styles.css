@@ -101,6 +101,14 @@ section#products .add_products {
 	text-align: left;
 }
 
+.edit-product {
+	display: inline-block;
+}
+
+.delete-product {
+	margin: 0 0 0 10px;
+}
+
 
 
 

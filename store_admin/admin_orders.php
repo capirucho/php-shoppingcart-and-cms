@@ -45,7 +45,7 @@ if ( !isUserLoggedIn() ) {
 			while ( $data = $result->fetch_object() ) {
 
 				echo "<tr>";
-					echo "<td><a id=\"$data->order_id\" href=\"order_details.php?orderId=".$data->order_id."\" class=\"order-id\">$data->order_id</a></td>";
+					echo "<td><a data-toggle=\"tooltip\" data-placement=\"right\" title=\"View order details\" id=\"$data->order_id\" href=\"order_details.php?orderId=".$data->order_id."\" class=\"order-id\">$data->order_id</a></td>";
 					echo "<td>$data->order_status</td>";
 					echo "<td>$data->customer_id</td>";
 					echo "<td>$".$data->sub_total."</td>";
