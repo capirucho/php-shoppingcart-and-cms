@@ -48,7 +48,7 @@ require 'shoppingcart_functions.php';
 		        </div>
 		        <div class="navbar-collapse collapse" id="navbar">
 		          <ul class="nav navbar-nav">
-		            <li><a href="#about">Buy Tamales!</a></li>
+		            <li><a href="product_categories.php?catId=-2">View All Tamales!</a></li>
 		          </ul>
 		          <ul class="nav navbar-nav navbar-right">
 		            <li>

@@ -29,8 +29,6 @@ if ( check_input( $_POST ) ) {
 	$adminUserName = $_POST['username'];
 	$adminPassword = $_POST['password'];
 
-	echo "Username passed: ".$adminUserName;
-
 	$theSQL = "SELECT username, email_address FROM ".$login_table." WHERE username = '" . mysql_real_escape_string($adminUserName) . "' AND password = '" .  mysql_real_escape_string($adminPassword) . "' LIMIT 1";
 	
 	if ( $theQueryResult = $db->query($theSQL) ) {

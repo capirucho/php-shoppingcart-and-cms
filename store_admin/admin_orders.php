@@ -20,6 +20,25 @@ if ( !isUserLoggedIn() ) {
 		echo "<div role=\"alert\" class=\"alert alert-success\">".$_GET['userAdded']."</div>";
 	}
 
+
+
+
+	$show_orderdetail_modal = false;
+
+	if ( isset($_GET['orderId']) ) {
+		$orderId = $_GET['orderId'];
+		
+
+		$orderDetailsTable = "shopcart_order_details";
+		$queryOrderDetailsTable = "select * from ".$orderDetailsTable." where order_id = ".$orderId.";";
+		$resultsOrderDetails = $db->query($queryOrderDetailsTable);
+
+		$show_orderdetail_modal = true;
+
+	}
+
+
+
 ?>
 
 <section id="orders">
@@ -56,11 +75,75 @@ if ( !isUserLoggedIn() ) {
 
 			}
 			$result->free();
-			$db->close();
+			
 		?>
 	</table>
 	
 </section>
 
 
-<?php require 'footer.php'; ?>
+<div id="view-order-details" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title"><h4>Viewing order details for order number: <?php echo $orderId; ?></h4>
+      </div>
+      <div class="modal-body">
+		  <!-- Table -->
+		  <table class="table table-striped">
+
+			<tr>
+				<th>Product Name</th>
+				<th>Unit Price</th>
+				<th>Quantity</th>
+				<th>Date Added</th>
+				<th>Check Out Status</th>
+			</tr>
+
+		    <?php
+				if ( $resultsOrderDetails->num_rows == 0 ) {
+					echo "<tr>";
+						echo "<td colspan=\"5\">0 results found</td>";
+					echo "</tr>";
+				}
+
+				while ( $dataForOrderDetails = $resultsOrderDetails->fetch_object() ) {
+						echo "<tr>";
+							echo "<td>$dataForOrderDetails->product_name</td>";
+							echo "<td>$".$dataForOrderDetails->unit_price."</td>";
+							echo "<td>$dataForOrderDetails->quantity</td>";
+							echo "<td>".date ('m-d-Y', strtotime($dataForOrderDetails->date_added))."</td>";
+							echo "<td>$dataForOrderDetails->checkout_status</td>";
+						echo "</tr>";
+
+
+
+				}	
+				$resultsOrderDetails->free();
+		    ?>
+		  </table>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<?php if ( $show_orderdetail_modal ) { ?>
+
+	<script>
+
+		$('#view-order-details').modal('show');
+		
+	</script>
+	
+<?php } ?>
+
+<?php 
+	$db->close(); 
+	require 'footer.php'; 
+?>

@@ -7,8 +7,9 @@ require 'header.php';
 <?php 
 
 	if ( isset($_GET['product_id']) ) {
-		$productId = $db->real_escape_string( $_GET['product_id'] ); 
-		echo $productId;
+	
+	$productId = $db->real_escape_string( $_GET['product_id'] ); 
+
 	//tables to query
 	$product_category_table = "shopcart_product_category";
 	$products_table = "shopcart_products";

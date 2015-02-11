@@ -4,9 +4,6 @@
 require 'shoppingcart_config.php';
 require 'shoppingcart_functions.php';
 
-// user defined functions for admin_home.php page ////
-
-
 ?>
 
 <!doctype html>

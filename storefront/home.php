@@ -25,10 +25,6 @@ require 'header.php';
 
       <?php 
       
-      //$message = isset($_GET['message']) ? $_GET['message'] : "";
-      //$productName = isset($_GET['prodName']) ? $_GET['prodName'] : "";
-
-
 
       if ( isset($_GET['message']) ) {
         $message = $_GET['message'];
@@ -70,7 +66,7 @@ require 'header.php';
       <div class="jumbotron">
         <h1>Come get some tamales!</h1>
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
-        <p><a role="button" href="#" class="btn btn-lg btn-success">Order some today!</a></p>
+        <p><a role="button" href="product_categories.php?catId=-2" class="btn btn-lg btn-success">Order some today!</a></p>
       </div>
       <div class="row">
         <div class="col-sm-8">
@@ -82,6 +78,7 @@ require 'header.php';
               <label for="choose-cat" class="col-sm-4 control-label">Sort by:&nbsp;</label>
               <select name="catId" id="choose-cat" class="form-control col-sm-8">
                 <option selected value="-1"> -- select category -- </option>
+                <option value="-2"> view all </option>
                 <?php while ( $data = $resultsForCategoryTable->fetch_object() ) { ?>
                 <option class="category" value="<?php echo $data->product_category_id; ?>"><?php echo $data->category_name; ?></option>               
                 <?php } //end while loop ?>

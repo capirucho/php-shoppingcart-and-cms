@@ -1,46 +1,5 @@
 <?php require 'header.php'; ?>
 
-<!--
-step1 : may not need to do this
-capture and declare vars for all the passed POST params from cart.php <br><br>
-
-step 2<br>
-get user session to compare when customerid returnes ?????
-
-user registration form
-- send all user add_customer_info.php
-
-add_customer_info.php
-- insert user info to customer table
-- pass url param : customerid (via header redirect) to create_order.php page
-
-create_order.php
-- grab customer id from add_customer_info.php page
-- query cart table rows for prod, quantity, subtotal, and get items in cart flagged status =incomplete AND compare usersession id in cart table to current session id
-  - if session ids match
-    - use result set
-      - calculate grand total (delivery charge, subtotal and tax)
-      - insert (create record on orders table)
- - query order table
-   - get order id
- - insert into order detail (orderid, prodid, quantity, unitprice)
-- redirect to checkout page pass orderid via url param
-
-- checkout.php
-	- display to user registration success
-	  - or error if user exist or something went wrong
-	- show order: product, qty, subtotal, tax, delivery, grandtotal
-    - place oder (button)
- - place_order.php
-      - change checkout_status on cart table to complete
-      - if place order - set order status on order table to complete (place_order.php)
-      - redirect user to sucess.php
- 
-- sucsess.php
- - show user sucess message order was placed
-
-
--->
 
 <?php if ( !isset($_SESSION['customer_username'] ) ) { ?>
 <div class="panel panel-default">
@@ -267,8 +226,6 @@ create_order.php
 		$resultsForOrderTotalsQuery = $db->query($orderTotalsQuery);
 
 	?>
-
-	order id passed = <?php echo $orderId ?><br><br>
 
 
 	<?php while ( $dataForOrderItems = $resultsForOrderItemsQuery->fetch_object() ) { ?>

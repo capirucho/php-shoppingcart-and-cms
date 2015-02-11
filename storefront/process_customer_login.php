@@ -29,8 +29,6 @@ if ( check_input( $_POST ) ) {
 	$adminPassword = $_POST['password'];
 	$placeOrder = $_POST['placeorder'];
 
-	echo "Username passed: ".$adminUserName;
-
 	$theSQL = "SELECT customer_id, username, email_address FROM ".$login_table." WHERE username = '" . mysql_real_escape_string($adminUserName) . "' AND password = '" .  mysql_real_escape_string($adminPassword) . "' LIMIT 1";
 	
 	if ( $theQueryResult = $db->query($theSQL) ) {

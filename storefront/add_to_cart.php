@@ -10,30 +10,6 @@
 		$userSessionId = session_id(); 
 		$cartTable = "shopcart_order_details";
 
-		//$addToCartQuery = "INSERT INTO ".$cartTable." VALUES ('','".$userSessionId."', '".$productId."', '".$productName."', '".$price."', '".$quantity."', now(), default, default);";
-
-		//if ($db->query($addToCartQuery)) {
-
-		//	if( !isset($_SESSION['cart_items'] ) ) {
-		//		$_SESSION['cart_items'] = array();
-		//	}		
-
-		//	if ( array_key_exists ($productId, $_SESSION['cart_items'] ) ) {
-		//		header("Location: home.php?message=exists&id=".$productId."&prodName=".$productName);
-				
-		//	}
-		//	else {
-		//		$_SESSION['cart_items'][$productId] = $productName;
-		//		//$message = "Added ".$productName." to Cart!";
-		//		header("Location: home.php?message=added&prodName=".$productName);				
-		//	}
-
-
-		//} 
-		//else {
-		//	echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
-		//	exit();
-		//}
 	}
 
 
