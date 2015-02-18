@@ -33,7 +33,7 @@
 
 		# check if product name exist
 		$productNameExists = 0;
-		$theSQL = "SELECT product_name FROM ".$table_name." WHERE product_name = '" . $prodName . "' LIMIT 1";
+		$theSQL = "select product_name from ".$table_name." where product_name = '" . $prodName . "' limit 1";
 
 		if ($theQueryResult = $db->query($theSQL) ) {
 	
@@ -47,11 +47,12 @@
 				}			
 			}
 		}
+		$theQueryResult->free();
 
 
 		# insert product data into mysql database
 
-		$insertProdQuery = "INSERT INTO ".$table_name." VALUES ('','".$catId."', now(), '".$prodName."', '".$prodImage."', '".$prodDescription."', 
+		$insertProdQuery = "insert into ".$table_name." values ('','".$catId."', now(), '".$prodName."', '".$prodImage."', '".$prodDescription."', 
 					'".$price."');";
 
 		if ($db->query($insertProdQuery)) {

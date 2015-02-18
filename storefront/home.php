@@ -12,12 +12,19 @@ require 'header.php';
   $queryTheProductsTable = "select * from ".$products_table." order by date_added desc limit 6;";
   $queryCategoryTable = "select * from ".$category_table." order by category_name asc;";
 
+
+
   //the results from the queries
   $resultsForProductsTable = $db->query($queryTheProductsTable); 
   $resultsForCategoryTable = $db->query($queryCategoryTable); 
 
+
+
   //place the $resultsForCategoriesTable into an array so result set can be used more than once
-  $arrayResultsForProducts = $resultsForProductsTable->fetch_all(MYSQLI_ASSOC); 
+  $arrayResultsForProducts = array();
+  while ( $prodRow = mysqli_fetch_assoc($resultsForProductsTable) ) {
+      $arrayResultsForProducts[] = $prodRow;
+  }
 
 
 
@@ -69,10 +76,10 @@ require 'header.php';
         <p><a role="button" href="product_categories.php?catId=-2" class="btn btn-lg btn-success">Order some today!</a></p>
       </div>
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-7">
           <h1>Our Newest Tamales Offerings</h1>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-5">
           <form class="form-horizontal sortby" method="get" action="product_categories.php">
             <div class="form-group">
               <label for="choose-cat" class="col-sm-4 control-label">Sort by:&nbsp;</label>

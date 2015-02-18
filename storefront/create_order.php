@@ -41,8 +41,9 @@
 			echo "items cart subtotal before insert to orders table: ".$cartSubTotal."<br>";
 
 		}
+		$resultsForItemsInCart->free();
 
-		$createOrderQuery = "INSERT INTO ".$ordersTable." VALUES ('', default, '".$customerId."', now(), '".$cartSubTotal."', default, default, default);";
+		$createOrderQuery = "insert into ".$ordersTable." values ('', default, '".$customerId."', now(), '".$cartSubTotal."', default, default, default);";
 
 
 		$total = 0;
@@ -62,11 +63,11 @@
 					$total = $orderSubTotal + $taxCharges;
 					$total = $total + $deliveryCharge;
 
-					$finalizeOrderQuery = "UPDATE ".$ordersTable." SET total = ".$total." WHERE order_id = ".$officialOrderId.";";
+					$finalizeOrderQuery = "update ".$ordersTable." set total = ".$total." where order_id = ".$officialOrderId.";";
 
 
 					if ( $db->query($finalizeOrderQuery ) ) {
-						$updateOrderDetailQuery = "UPDATE ".$cartTable." SET order_id = ".$officialOrderId." WHERE session_id = '".$currentUserSessionId."';";
+						$updateOrderDetailQuery = "update ".$cartTable." set order_id = ".$officialOrderId." where session_id = '".$currentUserSessionId."';";
 						if ( $db->query($updateOrderDetailQuery) ) {
 							header("Location: checkout.php?orderId=$officialOrderId");
 						}
@@ -87,6 +88,7 @@
 			echo "<p>Error for insert into order tables: MySQL error no {$db->errno} : {$db->error}</p>";
 			exit();
 		}
+		$queryOrdersTableResults->free();
 		
 	}
 

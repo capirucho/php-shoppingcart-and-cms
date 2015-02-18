@@ -29,7 +29,7 @@ if ( check_input( $_POST ) ) {
 	$adminPassword = $_POST['password'];
 	$placeOrder = $_POST['placeorder'];
 
-	$theSQL = "SELECT customer_id, username, email_address FROM ".$login_table." WHERE username = '" . mysql_real_escape_string($adminUserName) . "' AND password = '" .  mysql_real_escape_string($adminPassword) . "' LIMIT 1";
+	$theSQL = "select customer_id, username, email_address from ".$login_table." where username = '".$db->real_escape_string($adminUserName)."' and password = '".$db->real_escape_string($adminPassword)."' LIMIT 1";
 	
 	if ( $theQueryResult = $db->query($theSQL) ) {
 
@@ -46,6 +46,8 @@ if ( check_input( $_POST ) ) {
 						
 		}
 		else {
+			print "FAILED! Something went wrong somewhere. This hint may help: ".$db->error;
+			exit();
 			header("Location: customer_login.php");	
 		}
 		

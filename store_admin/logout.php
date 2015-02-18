@@ -9,7 +9,6 @@
 <html>
 	<head>
 		<title>Abuelita's House of Tamales</title>
-		<link rel="stylesheet" href="blogstyles.css">
 	</head>
 	<body>
 		<header>

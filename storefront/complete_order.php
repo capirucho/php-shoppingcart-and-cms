@@ -10,9 +10,9 @@
 
 	if ( isset($_POST['orderId']) ) {
 		$orderId = $_POST['orderId'];
-		$updateOrderDetailsStatusQuery = "UPDATE ".$cartTable." SET checkout_status = 'complete' WHERE order_id = ".$orderId.";";
+		$updateOrderDetailsStatusQuery = "update ".$cartTable." set checkout_status = 'complete' where order_id = ".$orderId.";";
 		if ( $db->query($updateOrderDetailsStatusQuery) ) {
-						$updateOrderQuery = "UPDATE ".$ordersTable." SET order_status = 'complete' WHERE order_id = ".$orderId.";";
+						$updateOrderQuery = "update ".$ordersTable." set order_status = 'complete' where order_id = ".$orderId.";";
 						if ( $db->query($updateOrderQuery) ) {
 							unset($_SESSION['cart_items']);
 							unset($_SESSION['sessionOrderID']);

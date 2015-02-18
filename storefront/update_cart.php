@@ -10,7 +10,7 @@
 	if ( isset($_POST['qty']) && isset($_POST['prodId'] ) ) {
 		$updatedQty = $_POST['qty'];
 		$productId = $_POST['prodId'];
-		$updateOrderDetailsQtyQuery = "UPDATE ".$cartTable." SET quantity = ".$updatedQty." WHERE product_id = ".$productId." and session_id = '".$currentUserSessionId."';";
+		$updateOrderDetailsQtyQuery = "update ".$cartTable." set quantity = ".$updatedQty." where product_id = ".$productId." and session_id = '".$currentUserSessionId."';";
 		if ( $db->query($updateOrderDetailsQtyQuery) ) {
 			$msgTxt = "Succesfully updated your cart.";
 			header ("Location: show_cart.php?message=updated&msgTxt=".$msgTxt);

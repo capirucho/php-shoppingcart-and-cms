@@ -24,7 +24,7 @@
 
 	else {
 		$_SESSION['cart_items'][$productId] = $productName;
-		$addToCartQuery = "INSERT INTO ".$cartTable." VALUES ('','".$userSessionId."', '".$productId."', '".$productName."', '".$price."', '".$quantity."', now(), default, default);";
+		$addToCartQuery = "insert into ".$cartTable." values ('','".$userSessionId."', '".$productId."', '".$productName."', '".$price."', '".$quantity."', now(), default, default);";
 		if ($db->query($addToCartQuery)) {
 			header("Location: home.php?message=added&prodName=".$productName);
 		}

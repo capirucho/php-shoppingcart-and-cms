@@ -48,14 +48,14 @@ a.logout {
 
 /* homepage */
 .jumbotron {
-	background-image: url('http://graphics8.nytimes.com/images/2012/12/19/dining/19TAMALES1_SPAN/19TAMALES1-superJumbo.jpg');
+	background-image: url('http://www.ronaldfigueroa.com/images/tamales/jumbo_tamales.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 60%;
 }
 
 .jumbotron {
-	color: red;
+	color: cornsilk;
 }
 
 form.sortby {
@@ -81,7 +81,9 @@ h3.prod-title {
 }
 
 .prod_img {
-	max-width: 85%;
+	width: 300px;
+	height: 300px;
+	margin: 5px;
 }
 
 

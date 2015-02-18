@@ -11,7 +11,7 @@ require 'header.php';
 
 ?>
 
-<?php 
+<?php
 
 	if ( isset($_GET['categoryNameExists']) ) {
 		echo "<div role=\"alert\" class=\"alert alert-danger\">".$_GET['categoryNameExists']."</div>";
@@ -35,7 +35,15 @@ require 'header.php';
 
 	if ( isset($_GET['deletedItem']) ) {
 		echo "<div role=\"alert\" class=\"alert alert-success\">".$_GET['deletedItem']."</div>";
-	}	
+	}
+
+	if ( isset($_GET['categoryDeleted']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-success\">".$_GET['categoryDeleted']."</div>";
+	}
+
+		if ( isset($_GET['selectCat']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-danger\">".$_GET['selectCat']."</div>";
+	}		
 	
 
 
@@ -48,8 +56,8 @@ require 'header.php';
 
 	//the queries
 	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
-	$queryTheProductsTable = "SELECT product_id, category_name, product_name, product_image, product_description, price FROM ".$products_table." 
-	left outer join ".$product_category_table." on ".$products_table.".product_category_id = ".$product_category_table.".product_category_id ORDER BY ".$product_category_table.".category_name;";
+	$queryTheProductsTable = "select product_id, category_name, product_name, product_image, product_description, price FROM ".$products_table." 
+	left outer join ".$product_category_table." on ".$products_table.".product_category_id = ".$product_category_table.".product_category_id order by ".$product_category_table.".category_name;";
 	
 
 
@@ -59,13 +67,16 @@ require 'header.php';
 		$prodId = $_POST['prodId'];
 		
 
-		$queryEditProdTable = "SELECT product_id, ".$product_category_table.".product_category_id, category_name, product_name, product_image, product_description, price FROM ".$products_table." 
+		$queryEditProdTable = "select product_id, ".$product_category_table.".product_category_id, category_name, product_name, product_image, product_description, price from ".$products_table." 
 		left outer join ".$product_category_table." on ".$products_table.".product_category_id = ".$product_category_table.".product_category_id where "
 		.$products_table.".product_id = ".$prodId.";";
 
 
 		$resultsForEditProductTable = $db->query($queryEditProdTable);
-		$arrayForEditProductTable = $resultsForEditProductTable->fetch_all(MYSQLI_ASSOC);
+		$arrayForEditProductTable = array();
+		while ( $prodRow = mysqli_fetch_assoc($resultsForEditProductTable) ) {
+			$arrayForEditProductTable[] = $prodRow;
+		}
 
 		$show_edit_prod_modal = true;
 
@@ -79,8 +90,10 @@ require 'header.php';
 	
 
 	//dump the $resultsForCategoriesTable into an array so result set can be used more than once
-	$finalResultsForCategories = $resultsForCategoriesTable->fetch_all(MYSQLI_ASSOC);	
-
+	$finalResultsForCategories = array();
+	while ($catsRow = mysqli_fetch_assoc($resultsForCategoriesTable) ) {
+		$finalResultsForCategories[] = $catsRow;
+	}
 ?>
 
 
@@ -152,7 +165,7 @@ require 'header.php';
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Add a New Tamales Product Category</h4>
+        <h4 class="modal-title">Manage Tamales Product Categories</h4>
       </div>
       <div class="modal-body">
         
@@ -160,29 +173,41 @@ require 'header.php';
 
       		if ( !empty($finalResultsForCategories) ) {
       	?>		
-		      	<div class="panel panel-info panel-default">
-					  <div class="panel-heading">Categories of Tamales already offered:</div>
-					  <div class="panel-body">
-					  	<?php
+	      	<div class="well">
+				<h4>Current Categories:</h4>
+			  	<form id="edit-current-cats-form" action="admin_delete_category.php" method="post">
+				  	<div class="row">
+				  		<div class="col-sm-8">
+				  			<div class="form-group">
+							  	<?php
+										foreach ($finalResultsForCategories as $key => $value) {
+											echo "<div class=\"category-result-item\">";
+												echo "<input type=\"radio\" name=\"product_category_id\" value=\"".$value['product_category_id']."\">";
+										    	echo "<span class=\"label label-default\">".$value['category_name']."</span> ";
+										    echo "</div>";
+										}
+								?>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<input class="btn-danger btn-xs" type="submit" value="delete checked category">
+						</div>
+					</div>
+				</form>
+			</div>
 
-								foreach ($finalResultsForCategories as $key => $value) {
-								    echo "<span class=\"label label-default\">".$value['category_name']."</span> ";
-								}
-
-						?>
-				  </div>
-				</div>
 
       	<?php } ?>
 
-		<form role="form" action="admin_add_category.php" method="POST">
-		  <div class="form-group">
-		    <label for="userName">Create a new category of Tamales</label>
-		    <input name="category_name" type="text" class="form-control" id="category_name" placeholder="Example category: chicken, vegan">
-		  </div>		  
-		  <button type="submit" class="btn btn-success">Create a new Tamales Category</button>
-		</form>
-
+			<div class="well">
+				<form role="form" action="admin_add_category.php" method="POST">
+				  <div class="form-group">
+				    <label for="userName">Create a new category of Tamales</label>
+				    <input name="category_name" type="text" class="form-control" id="category_name" placeholder="Example category: chicken, vegan">
+				  </div>		  
+				  <button type="submit" class="btn btn-success">Create a new Tamales Category</button>
+				</form>
+			</div>
 
       </div>
       <div class="modal-footer">
@@ -247,9 +272,9 @@ require 'header.php';
 				  </div>		  		  		  
 				  <div class="form-group">
 				    <label for="price">Price</label>
-				    <input name="price" type="text" class="form-control" id="price" placeholder="Enter price for a dozen">
+				    <input name="price" type="text" class="form-control" id="price" placeholder="Example: 12.00 (without the $)">
 				  </div>	  
-				  <button type="submit" class="btn btn-success">Create new Tamales product</button>
+				  <button type="submit" class="btn btn-success">Add new product</button>
 			  </div>
 			</div>
 		</form>

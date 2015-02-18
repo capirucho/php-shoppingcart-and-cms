@@ -41,9 +41,15 @@
 		$state = $db->real_escape_string( $_POST['state'] );
 		$zipcode = $db->real_escape_string( $_POST['zipcode'] );
 
+		if (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
+			$message = "Please enter a valid email.";
+			header("Location: checkout.php?invalidEmail=$message");
+			exit();
+		}		
+
 		# check if customer username name exist
 		$userNameExists = 0;
-		$theSQL = "SELECT username FROM ".$customerTable." WHERE username = '" . $username . "' LIMIT 1";
+		$theSQL = "select username from ".$customerTable." where username = '" . $username . "' limit 1";
 
 		if ($theQueryResult = $db->query($theSQL) ) {
 	
@@ -57,11 +63,11 @@
 				}			
 			}
 		}
-
+		$theQueryResult->free();
 
 		# insert customer info data into mysql database
 
-		$insertCustomerQuery = "INSERT INTO ".$customerTable." VALUES ('','".$firstName."', '".$lastName."', '".$emailAddress."', '".$username."', '".$password."', '".$phone."', '".$address."', '".$city."', '".$state."', '".$zipcode."', '".$ccType."', '".$ccNumber."', '".$ccExpDate."');";
+		$insertCustomerQuery = "insert into ".$customerTable." values ('','".$firstName."', '".$lastName."', '".$emailAddress."', '".$username."', '".$password."', '".$phone."', '".$address."', '".$city."', '".$state."', '".$zipcode."', '".$ccType."', '".$ccNumber."', '".$ccExpDate."');";
 
 
 		if ($db->query($insertCustomerQuery)) {

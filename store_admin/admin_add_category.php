@@ -24,12 +24,11 @@
 	// Main Body  /////
 
 	if ( check_input( $_POST ) ) {
-
 		$categoryName = $db->real_escape_string( $_POST['category_name'] );
 
 		# check if category exist 
 		$foundCategory = 0;
-		$theSQL = "SELECT category_name FROM ".$table_name." WHERE category_name = '" . $categoryName . "' LIMIT 1";
+		$theSQL = "select category_name from ".$table_name." where category_name = '" . $categoryName . "' limit 1";
 
 		if ($theQueryResult = $db->query($theSQL) ) {
 	
@@ -43,17 +42,18 @@
 				}			
 			}
 		}
+		$theQueryResult->free();
 
 
 		# insert data into mysql database
 
-		$insertCatQuery = "INSERT INTO ".$table_name." VALUES (null, '".$categoryName."');";
+		$insertCatQuery = "insert into ".$table_name." values (null, '".$categoryName."');";
 
 		if ($db->query($insertCatQuery)) {
 			$message = "A New Category for Tamales has been added!";
 			header("Location: admin_products.php?categoryAdded=$message");
 		} else {
-			echo "<p>MySQL error no {$mysqli->errno} : {$mysqli->error}</p>";
+			echo "<p>MySQL error no test {$db->errno} : {$db->error}</p>";
 			exit();
 		}
 

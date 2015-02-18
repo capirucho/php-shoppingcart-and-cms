@@ -42,7 +42,6 @@ if ( !isUserLoggedIn() ) {
 			$resultsCustomerTable = $db->query($queryCustomerTable);	
 
 			while ( $dataCustomerTable = $resultsCustomerTable->fetch_object() ) {
-				//$ccNum = $dataCustomerTable->credit_card_number;
 				$ccNum = 'XXXX-XXXX-XXXX-'.substr($dataCustomerTable->credit_card_number, -4);
 				echo "<tr>";
 					echo "<td>$dataCustomerTable->last_name, $dataCustomerTable->first_name</td>";

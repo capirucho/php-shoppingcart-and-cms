@@ -22,8 +22,6 @@ require 'shoppingcart_functions.php';
 	    <!-- Bootstrap theme -->
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"
 
-	    <!-- Custom styles for this template -->
-	    <link href="theme.css" rel="stylesheet">
 
 	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	    <!--[if lt IE 9]>
@@ -66,6 +64,9 @@ require 'shoppingcart_functions.php';
 						?>
 		            	
 
+		            </li>
+		            <li>
+		            	<a href="register.php">Register</a>
 		            </li>
 		            <li>
 		            	<a href="show_cart.php">

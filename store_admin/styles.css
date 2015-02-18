@@ -75,6 +75,10 @@ section#products .add_products {
 	margin: 20px 0 10px 0;
 }
 
+a.order-id, a.customer-name {
+	text-decoration: underline;
+}
+
 
 #product_list {
 	table-layout: fixed;
@@ -83,6 +87,21 @@ section#products .add_products {
 .prod-image {
 	word-wrap: break-word;
 }
+
+#edit-current-cats-form {
+	margin: 0 0 10px 0;
+}
+
+#edit-current-cats-form input[type='radio'] {
+	margin: 0 5px 0 0;
+}
+
+.category-result-item {
+	display: inline-block;
+	margin: 0 4px 5px 0;
+}
+
+
 
 #addCategoryForm ol.current_cats  {
 	padding: 0;

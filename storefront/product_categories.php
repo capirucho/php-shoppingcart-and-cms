@@ -28,11 +28,14 @@
 ?>
 
 <div class="row">
-  <div class="col-sm-8">
+  <div class="col-sm-7">
     <h1 class="cat-name">Viewing: 
       <?php 
         if ($catId !== -2 || $catId == -1 ) {
-          while ( $data = $resultsForCurrentCat->fetch_object() ) { echo $data->category_name." Tamales"; } 
+          while ( $data = $resultsForCurrentCat->fetch_object() ) { 
+            echo $data->category_name." Tamales"; 
+          }
+          $resultsForCurrentCat->free(); 
         } 
         if ($catId == -2 ) { 
           echo "All Categories of Tamales";
@@ -41,7 +44,7 @@
       
     </h1>
   </div>
-  <div class="col-sm-4">
+  <div class="col-sm-5">
     <form class="form-horizontal sortby" method="get" action="product_categories.php">
       <div class="form-group">
         <label for="choose-cat" class="col-sm-4 control-label">Sort by:&nbsp;</label>
@@ -50,7 +53,10 @@
           <option value="-2">view all</option>
           <?php while ( $dataCategories = $resultsForCategoryTable->fetch_object() ) { ?>
           <option class="category" value="<?php echo $dataCategories->product_category_id; ?>"><?php echo $dataCategories->category_name; ?></option>               
-          <?php } //end while loop ?>
+          <?php 
+              } //end while loop 
+              $resultsForCategoryTable->free();
+          ?>
         </select>
         <button class="btn btn-success btn-sm go">go</button>
       </div>
@@ -65,8 +71,8 @@
 if ($catId !== -2 || $catId !== -1) {
 
   //the query for product/category where catId requested matches table
-  $queryProdCatTables = "select product_id, category_name, product_name, product_image FROM ".$products_table." left outer join ".$category_table." on "
-  .$products_table.".product_category_id = ".$category_table.".product_category_id where ".$category_table.".product_category_id = ".$catId." ORDER BY "
+  $queryProdCatTables = "select product_id, category_name, product_name, product_image from ".$products_table." left outer join ".$category_table." on "
+  .$products_table.".product_category_id = ".$category_table.".product_category_id where ".$category_table.".product_category_id = ".$catId." order by "
   .$products_table.".product_name;";
 
   //the results from the queries
@@ -74,19 +80,24 @@ if ($catId !== -2 || $catId !== -1) {
 
 
   //place the $resultsForCategoriesTable into an array so result set can be used more than once
-  $arrayResultsForProductsCats = $resultsForProductsCatTables->fetch_all(MYSQLI_ASSOC);   
 
-    if ( !empty($arrayResultsForProductsCats) ) {
-        echo "<div class=\"row\">";
-          foreach ($arrayResultsForProductsCats as $key => $value) {
-            echo "<div class=\"col-sm-4\">";
-              echo "<h3 class=\"prod-title\">".$value['product_name']."</h3>";
-              echo "<img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\">";
-              echo "<p><a role=\"button\" href=\"product_detail.php?product_id=".$value['product_id']."\" class=\"btn btn-success view-details\">View details »</a></p>";
-            echo "</div>";
-          }
-        echo "</div>";
-    }
+
+  $arrayResultsForProductsCats = array();
+  while ( $prodCatRow = mysqli_fetch_assoc($resultsForProductsCatTables) ) {
+    $arrayResultsForProductsCats[] = $prodCatRow;
+  }
+
+  if ( !empty($arrayResultsForProductsCats) ) {
+      echo "<div class=\"row\">";
+        foreach ($arrayResultsForProductsCats as $key => $value) {
+          echo "<div class=\"col-sm-4\">";
+            echo "<h3 class=\"prod-title\">".$value['product_name']."</h3>";
+            echo "<img class=\"prod_img img-thumbnail\" src=\"".$value['product_image']."\">";
+            echo "<p><a role=\"button\" href=\"product_detail.php?product_id=".$value['product_id']."\" class=\"btn btn-success view-details\">View details »</a></p>";
+          echo "</div>";
+        }
+      echo "</div>";
+  }
 }
  
 ?>
@@ -114,6 +125,7 @@ if ($catId == -2) {
         
 
   }
+  $resultsAllProductsCatTables->free();
   echo "</div>";
 }
 

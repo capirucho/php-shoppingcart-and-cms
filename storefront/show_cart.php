@@ -31,7 +31,7 @@
 	//the query
 	$cartItemsQuery = "select ".$cartTable.".product_name, product_image, sum(quantity) as quantity, price, session_id, ".$cartTable.".product_id from "
 	.$productsTable." left outer join ".$cartTable." on ".$cartTable.".product_id = ".$productsTable.".product_id where ".$cartTable.".session_id = '"
-	.$currentUserSessionId."' and checkout_status = 'incomplete' GROUP BY ".$productsTable.".product_name;";
+	.$currentUserSessionId."' and checkout_status = 'incomplete' group by ".$productsTable.".product_name;";
 
 
 

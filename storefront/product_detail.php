@@ -8,25 +8,33 @@ require 'header.php';
 
 	if ( isset($_GET['product_id']) ) {
 	
-	$productId = $db->real_escape_string( $_GET['product_id'] ); 
+		$productId = $db->real_escape_string( $_GET['product_id'] ); 
 
-	//tables to query
-	$product_category_table = "shopcart_product_category";
-	$products_table = "shopcart_products";
+		//tables to query
+		$product_category_table = "shopcart_product_category";
+		$products_table = "shopcart_products";
 
-	//the queries
-	$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
-	$queryTheProductsTable = "select * from ".$products_table." where product_id =".$productId.";";
+		//the queries
+		$queryTheCategoryTable = "select * from ".$product_category_table." order by category_name asc;";
+		$queryTheProductsTable = "select * from ".$products_table." where product_id =".$productId.";";
 
 
 
-	//the results from the queries
-	$resultsForCategories = $db->query($queryTheCategoryTable);
-	$resultsForProducts = $db->query($queryTheProductsTable);
-	
-	//dump the results into an array so result set can be used more than once
-	$arrayResultsForProducts = $resultsForProducts->fetch_all(MYSQLI_ASSOC);
-	$arrayResultsForCategories = $resultsForCategories->fetch_all(MYSQLI_ASSOC);	
+		//the results from the queries
+		$resultsForCategories = $db->query($queryTheCategoryTable);
+		$resultsForProducts = $db->query($queryTheProductsTable);
+		
+		//dump the results into an array so result set can be used more than once
+		$arrayResultsForProducts = array();
+		while ( $prodRow = mysqli_fetch_assoc($resultsForProducts) ) {
+			$arrayResultsForProducts[] = $prodRow;
+		}
+
+		$arrayResultsForCategories = array();
+		while ( $catRow = mysqli_fetch_assoc($resultsForCategories) ) {
+			$arrayResultsForCategories[] = $catRow;
+		}
+
 		
 	}
 

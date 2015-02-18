@@ -34,7 +34,7 @@
 
 		# check if username exist insert
 		$foundUserName = 0;
-		$theSQL = "SELECT username FROM ".$table_name." WHERE username = '" . $userName . "' LIMIT 1";
+		$theSQL = "select username from ".$table_name." where username = '" . $userName . "' limit 1";
 
 		if ($theQueryResult = $db->query($theSQL) ) {
 	
@@ -43,21 +43,22 @@
 
 				if ($foundUserName == 1) {
 					$message = "Username already exists! Please choose a different Username.";
-					header("Location: shopcart_admin_users.php?foundUserName=$message");
+					header("Location: admin_users.php?foundUserName=$message");
 					exit();
 				}			
 			}
 		}
+		$theQueryResult->free();
 
 
 		# insert data into mysql database
 
-		$addUserQuery = "INSERT INTO ".$table_name." VALUES ('".$userName."', '".$firstName."', '".$lastName."', 
+		$addUserQuery = "insert into ".$table_name." values ('".$userName."', '".$firstName."', '".$lastName."', 
 					'".$password."', '".$email."');";
 
 		if ($db->query($addUserQuery)) {
 			$message = "User registered successfully!";
-			header("Location: shopcart_admin_users.php?userAdded=$message");
+			header("Location: admin_users.php?userAdded=$message");
 		} else {
 			echo "<p>MySQL error no {$mysqli->errno} : {$mysqli->error}</p>";
 			exit();
