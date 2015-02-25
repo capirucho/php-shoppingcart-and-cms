@@ -32,7 +32,10 @@ require 'header.php';
 
       <?php 
       
-
+      if ( isset($_GET['verificationEmailSent']) ) {
+        echo "<div role=\"alert\" class=\"alert alert-warning\">".$_GET['verificationEmailSent']."</div>";
+      }
+      
       if ( isset($_GET['message']) ) {
         $message = $_GET['message'];
       }

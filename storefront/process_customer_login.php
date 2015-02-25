@@ -4,10 +4,8 @@
 require 'shoppingcart_config.php';
 require 'shoppingcart_functions.php';
 
-
-
 // user defined variables /////
-$login_table = "shopcart_customer";
+$customerTable = "shopcart_customer";
 
 
 // user defined functions for process_admin_login.php page /////
@@ -25,48 +23,52 @@ function check_input ( $form_array ) {
 // body ////
 
 if ( check_input( $_POST ) ) { 
-	$adminUserName = $_POST['username'];
-	$adminPassword = $_POST['password'];
+	$customerUsername = $db->real_escape_string($_POST['username']);
+	$customerPassword = $db->real_escape_string($_POST['password']);
 	$placeOrder = $_POST['placeorder'];
 
-	$theSQL = "select customer_id, username, email_address from ".$login_table." where username = '".$db->real_escape_string($adminUserName)."' and password = '".$db->real_escape_string($adminPassword)."' LIMIT 1";
+	$customerTableQuery = "select customer_id, username, password, email_address, verified_email from ".$customerTable." where username = '".$customerUsername."' and password = '".$customerPassword."' LIMIT 1";
 	
-	if ( $theQueryResult = $db->query($theSQL) ) {
-
-		if ( $data = $theQueryResult->fetch_object() ) {
-			$customerId = $data->customer_id;
-			$_SESSION['customer_username'] = $data->username;
-			$_SESSION['customerId'] = $data->customer_id;
-			if ( $placeOrder == true ) {
-				header("Location: create_order.php?custId=$customerId");		
+	if ( $customerTableQueryResults = $db->query($customerTableQuery) ) {
+		if ( $data = $customerTableQueryResults->fetch_object() ) {
+			if ( $data->verified_email == 1 ) {
+				$customerId = $data->customer_id;
+				$_SESSION['customer_username'] = $data->username;
+				$_SESSION['customerId'] = $data->customer_id;
+				if ( $placeOrder == true ) {
+					header("Location: create_order.php?custId=$customerId");		
+				}
+				else {
+					header("Location: home.php");
+				}
 			}
-			else {
-				header("Location: home.php");
+			if ( $data->verified_email == 0 ) { 
+				$message = "You have not activated your account. Please check your email and follow directions to activate your account.";
+				header("Location: customer_login.php?needToVerify=$message");
 			}
-						
+					
 		}
 		else {
-			print "FAILED! Something went wrong somewhere. This hint may help: ".$db->error;
-			exit();
-			header("Location: customer_login.php");	
+			if ($data->username != $customerUsername || $data->password != $customerPassword ) {
+				$message = "Incorrect username or password entered";
+				header("Location: customer_login.php?incorrectLogin=$message");	
+			}	
 		}
-		
-		$theQueryResult->free();		
-
+		$customerTableQueryResults->free();		
 	}
 
 	else {
-		print "FAILED! Something went wrong somewhere. This hint may help: ".$db->error;
+		echo "FAILED! Something went wrong somewhere. This hint may help: ".$db->error;
 	}
-	$db->close();
 	
-	
+		
 	
 }
 else {
-	echo "Please enter a Username and Password.";
+	$message = "Please enter a Username and Password.";
+	header("Location: customer_login.php?noBlanks=$message");	
 }
 
-
+$db->close();
 
 ?>

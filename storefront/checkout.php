@@ -42,7 +42,7 @@
     <h3 class="panel-title">Register</h3>
   </div>
   <div id="step2" class="panel-body hidden">
-		<form role="form" action="add_customer_info.php" method="POST">
+		<form id="customer-registration-form" role="form" action="add_customer_info.php" method="POST">
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="row">
@@ -62,7 +62,7 @@
 
 					  <div class="form-group">
 					    <label for="email_address">Email Address</label>
-					    <input name="email_address" type="text" class="form-control" id="email_address" placeholder="Enter Email">
+					    <input id="#email_address" name="email_address" type="email" class="form-control" id="email_address" placeholder="Enter Email">
 					  </div>			  
 					  <div class="form-group">
 					    <label for="username">Username</label>
@@ -189,7 +189,7 @@
 				  </div>
 				</div>				
 		  </div>		  
-		  <button type="submit" class="btn btn-success">Register</button>
+		  <button id="register-btn" type="submit" class="btn btn-success">Register</button>
 		</form>
   </div>
 </div>
@@ -285,7 +285,6 @@
 	</div>		
 </div>
 <?php } ?>
-
 
 
 

@@ -1,46 +1,54 @@
 <?php require 'header.php'; ?>
 
+<?php
+	if ( isset($_GET['invalidEmail']) ) {
+		echo "<div role=\"alert\" class=\"alert alert-danger\">".$_GET['invalidEmail']."</div>";
+	}
+?>
+<div class="alert alert-danger hidden" role="alert">...</div>
+<div class="alert alert-warning hidden" role="alert">...</div>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Register</h3>
   </div>
   <div id="step2" class="panel-body">
-		<form role="form" action="add_customer_info.php" method="POST">
+		<form id="register-form" role="form" action="add_customer_info.php" method="POST">
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="row">
 						<div class="col-xs-6 col-sm-6">
 							  <div class="form-group">
-							    <label for="first_name">First Name</label>
+							    <label class="control-label" for="first_name">First Name</label>
 							    <input name="first_name" type="text" class="form-control" id="first_name" placeholder="First Name">
 							  </div>
 							</div>
 						<div class="col-xs-6 col-sm-6">
 							  <div class="form-group">
-							    <label for="last_name">Last Name</label>
+							    <label class="control-label" for="last_name">Last Name</label>
 							    <input name="last_name" type="text" class="form-control" id="last_name" placeholder="Last Name">
 							  </div>
 							</div>
 					</div>
 
 					  <div class="form-group">
-					    <label for="email_address">Email Address</label>
+					    <label class="control-label" for="email_address">Email Address</label>
 					    <input name="email_address" type="text" class="form-control" id="email_address" placeholder="Enter Email">
 					  </div>			  
 					  <div class="form-group">
-					    <label for="username">Username</label>
+					    <label class="control-label" for="username">Username</label>
 					    <input name="username" type="text" class="form-control" id="username" placeholder="Username (Used to login)">
 					  </div>  		  		  		  
 					  <div class="form-group">
-					    <label for="password">Password</label>
+					    <label class="control-label" for="password">Password</label>
 					    <input name="password" type="text" class="form-control" id="password" placeholder="Password">
 					  </div>
 
 					<div class="row">
 						<div class="col-xs-6 col-sm-6">
 							  <div class="form-group">
-							    <label for="credit_card_type">Credit Card</label>
-									<select name="credit_card_type" size="1" class="form-control">
+							    <label class="control-label" for="credit_card_type">Credit Card</label>
+									<select name="credit_card_type" size="1" class="form-control" id="credit-card-type">
 										<option value="" selected>Select type of Credit Card</option>
 										<option value="visa">Visa</option>
 										<option value="mastercard">Mastercard</option>
@@ -51,13 +59,13 @@
 						</div>
 						<div class="col-xs-6 col-sm-6">
 							  <div class="form-group">
-							    <label for="credit_card_number">CC Number</label>
+							    <label class="control-label" for="credit_card_number">CC Number</label>
 							    <input name="credit_card_number" type="text" class="form-control" id="credit_card_number" placeholder="Credit Card Number">
 							  </div>
 							</div>
 					</div>
 					  <div class="form-group">
-					    <label for="credit_card_expiration_date">Expiration Date</label>
+					    <label class="control-label" for="credit_card_expiration_date">Expiration Date</label>
 					    <input name="credit_card_expiration_date" type="text" class="form-control" id="credit_card_expiration_date" placeholder="dd/mm/yyyy">
 					  </div> 					
 
@@ -66,21 +74,21 @@
 
 				<div class="col-sm-6">
 				  <div class="form-group">
-				    <label for="phone">Phone Number</label>
+				    <label class="control-label" for="phone">Phone Number</label>
 				    <input name="phone" type="text" class="form-control" id="phone" placeholder="Phone Number">
 				  </div>
 				  <div class="form-group">
-				    <label for="address">Address</label>
+				    <label class="control-label" for="address">Address</label>
 				    <input name="address" type="text" class="form-control" id="address" placeholder="Address">
 				  </div>
 				  <div class="form-group">
-				    <label for="city">City</label>
+				    <label class="control-label" for="city">City</label>
 				    <input name="city" type="text" class="form-control" id="city" placeholder="City">
 				  </div>		  		  		  
 				  <div class="form-group">
-				    <label for="state">State</label>
-				    <select name="state" size="1" class="form-control">
-
+				    <label class="control-label" for="state">State</label>
+				    <select name="state" size="1" class="form-control" id="state">
+				    	<option value="" selected> -- select state --</option>
 						<option value="AL">Alabama</option>
 						<option value="AK">Alaska</option>
 						<option value="AZ">Arizona</option>
@@ -147,12 +155,12 @@
 					</select>
 				  </div>
 				  <div class="form-group">
-				    <label for="zipcode">Zip Code</label>
+				    <label class="control-label" for="zipcode">Zip Code</label>
 				    <input name="zipcode" type="text" class="form-control" id="zipcode" placeholder="Enter zipcode">
 				  </div>
 				</div>				
 		  </div>		  
-		  <button type="submit" class="btn btn-success">Register</button>
+		  <button id="register-btn" type="submit" class="btn btn-success">Register</button>
 		</form>
   </div>
 </div>
