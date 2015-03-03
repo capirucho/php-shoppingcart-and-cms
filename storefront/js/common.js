@@ -22,17 +22,17 @@ $(document).ready(function() {
 
         var firstName = $("#first-name").val();
         var lastName = $("#last-name").val();
-        var userName = $("#username").val();
-        var password = $("#password").val();
+        var userName = $("#customerLoginName").val();
+        var password = $("#customerPassword").val();
         var ccType = $("#credit-card-type").val();
-        var ccNumber = $("#credit_card_number").val();
-        var ccExpDate = $("#credit_card_expiration_date").val();
+        var ccNumber = $("#credit-card-number").val();
+        var ccExpDate = $("#credit-card-expiration-date").val();
         var phone = $("#phone").val();
         var address = $("#address").val();
         var city = $("#city").val();
         var state = $("#state").val();
         var zipcode = $("#zipcode").val();
-        var emailAddress = $("#email_address").val();
+        var emailAddress = $("#email-address").val();
 
         if (checkIfAnyEmptyValues(firstName, lastName, userName, password, ccType, ccNumber, ccExpDate, phone, address, city, state, zipcode) || !isEmailValid(emailAddress) ) {
             $(".alert-danger").text("Please fill in all fields.");
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
         if ( isEmailValid(emailAddress) ) {
            $(".alert-warning").addClass("hidden");
-           $("#email_address").parent().removeClass('has-error'); 
+           $("#email-address").parent().removeClass('has-error'); 
         }
 
         if (!checkIfAnyEmptyValues(firstName, lastName, userName, password, ccType, ccNumber, ccExpDate, phone, address, city, state, zipcode) && isEmailValid(emailAddress) ) {
@@ -57,7 +57,7 @@ $(document).ready(function() {
     function isEmailValid(emailAddress) {
         var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,6})?$/;
         if (!emailReg.test(emailAddress) || emailAddress == "" ) {
-            $("#email_address").parent().addClass('has-error');
+            $("#email-address").parent().addClass('has-error');
             return false;
         }
         else {

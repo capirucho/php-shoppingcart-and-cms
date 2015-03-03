@@ -66,7 +66,12 @@ require 'shoppingcart_functions.php';
 
 		            </li>
 		            <li>
-		            	<a href="register.php">Register</a>
+		            	<?php
+		            		if ( !isset($_SESSION['customer_username']) ) {
+		            			echo "<a href=\"register.php\">Register</a>";
+		            		}
+		            	
+		            	?>
 		            </li>
 		            <li>
 		            	<a href="show_cart.php">

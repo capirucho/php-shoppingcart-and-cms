@@ -43,9 +43,16 @@ if ( !isUserLoggedIn() ) {
 
 			while ( $dataCustomerTable = $resultsCustomerTable->fetch_object() ) {
 				$ccNum = 'XXXX-XXXX-XXXX-'.substr($dataCustomerTable->credit_card_number, -4);
+				$emailStatus = $dataCustomerTable->verified_email;
+				if ($emailStatus == 0) {
+					$showEmailStatus = "<span class=\"label label-danger\">Email not verified.</span>";
+				}
+				if ($emailStatus == 1) {
+					$showEmailStatus = "<span class=\"label label-success\">Email Verified.</span>";
+				}
 				echo "<tr>";
 					echo "<td>$dataCustomerTable->last_name, $dataCustomerTable->first_name</td>";
-					echo "<td>$dataCustomerTable->email_address</td>";
+					echo "<td>$dataCustomerTable->email_address<br>$showEmailStatus</td>";
 					echo "<td>$dataCustomerTable->username</td>";
 					echo "<td>$dataCustomerTable->phone</td>";
 					echo "<td>$dataCustomerTable->address, $dataCustomerTable->city, $dataCustomerTable->state, $dataCustomerTable->zipcode</td>";

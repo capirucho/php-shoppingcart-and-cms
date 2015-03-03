@@ -59,8 +59,7 @@
 
 				if ($userNameExists == 1) {
 					$message = "Username Name already exists! Please choose a different Username";
-					//todo: redirect to standalone registration page???
-					header("Location: checkout.php?userNameExists=$message");
+					header("Location: register.php?userNameExists=$message");
 					exit();
 				}			
 			}
@@ -105,22 +104,6 @@
 			$message = "We just sent you an email message to verify your account. Please follow the instructions in that message.";
 			header("Location: home.php?verificationEmailSent=$message");			
 
-			//query customer table to get customer username so that we can set _session username
-			//Also set customerId in the session in case logged-in user continues shopping after placing an order
-
-			/*
-			$queryCustomerTable = "select customer_id, username from ".$customerTable." where customer_id = ".$customerId.";";
-			if ($customerTableResults = $db->query($queryCustomerTable)) {
-				if ( $data = $customerTableResults->fetch_object() ) {
-					$_SESSION['customer_username'] = $data->username;
-					$_SESSION['customerId'] = $data->customer_id;
-					header("Location: create_order.php?custId=$customerId");
-				}
-			} else {
-				echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";
-			}
-
-			*/
 
 		} else {
 			echo "<p>MySQL error no {$db->errno} : {$db->error}</p>";

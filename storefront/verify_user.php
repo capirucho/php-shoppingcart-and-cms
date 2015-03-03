@@ -45,6 +45,7 @@ if(isset($_GET['verifyEmail']) && !empty($_GET['verifyEmail']) AND isset($_GET['
 		}
 
 	}
+	$resultsCustomerTableEmailAndHash->free();
 }
 
 
